@@ -2,7 +2,7 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>泰國11日盛夏之旅 (2026)</title>
     <style>
         /* 引入現代感字體 */
@@ -23,6 +23,8 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            /* 消除 iOS 點擊藍色高亮陰影 */
+            -webkit-tap-highlight-color: transparent; 
         }
 
         body {
@@ -31,6 +33,8 @@
             color: var(--text-main);
             background-color: var(--bg-color);
             padding: 20px 10px;
+            /* 支援 iPhone 底部安全區域 */
+            padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
         }
 
         .container {
@@ -81,6 +85,11 @@
             font-weight: 600;
         }
 
+        /* 日程區塊外距對齊 */
+        .day-section {
+            margin-bottom: 25px;
+        }
+
         /* 頂部打卡注意事項區塊優化 */
         .highlight-box {
             background: linear-gradient(135deg, #fffaf0, #fff5e6);
@@ -96,7 +105,7 @@
         /* 現代化表格排版 */
         .table-wrapper {
             overflow-x: auto;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             border-radius: 8px;
             border: 1px solid #e2e8f0;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
@@ -244,33 +253,103 @@
             padding-top: 20px;
         }
 
-        /* RWD 響應式斷點優化 */
+        /* ====================================================
+           【全新優化】iPhone & 手機端極致體驗優化
+           ==================================================== */
         @media (max-width: 768px) {
             .food-grid { grid-template-columns: 1fr; }
             h1 { font-size: 1.6rem; }
-            h2 { font-size: 1.2rem; }
-            h3 { font-size: 1.1rem; }
-            .container { padding: 15px 10px; }
-            .highlight-box { padding: 15px; }
+            h2 { font-size: 1.2rem; margin-top: 25px; }
+            h3 { font-size: 1.1rem; margin-top: 20px; }
+            .container { padding: 15px 10px; border-radius: 0; box-shadow: none; }
+            .highlight-box { padding: 15px; font-size: 0.9rem; }
 
-            /* 手機版圖片自適應，防止撐破版面或重疊 */
+            /* 針對手機端的超連結按鈕加大觸控範圍，避免誤觸 */
+            a { padding: 2px 0; display: inline-block; }
+            .highlight-box a { text-decoration: underline; font-weight: bold; }
+
+            /* 將原本不便於手機瀏覽的表格，重組為適合直向滑動的「卡片流」 */
+            .table-wrapper {
+                border: none;
+                box-shadow: none;
+                overflow-x: visible;
+                margin-bottom: 20px;
+            }
+            
+            table, thead, tbody, th, td, tr { 
+                display: block; 
+            }
+            
+            /* 隱藏手機端不需要的表頭 */
+            thead tr { 
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            tr {
+                background: #ffffff !important;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                margin-bottom: 15px;
+                padding: 12px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            }
+            
+            td {
+                border: none;
+                padding: 6px 0;
+                position: relative;
+                font-size: 0.95rem;
+                text-align: left !important; /* 強制內容靠左 */
+            }
+
+            /* 為主要時間或名稱加上醒目樣式 */
+            td:first-child {
+                font-weight: 700;
+                color: var(--primary-color);
+                border-bottom: 1px dashed #e2e8f0;
+                padding-bottom: 6px;
+                margin-bottom: 6px;
+                font-size: 1rem;
+            }
+            
+            /* 【修改】手機版圖片調整：全部靠左對齊，不再置中或偏右 */
             .table-wrapper table img, 
             .hotel-card img, 
             .img-box {
-                width: 100% !important;
-                max-width: 280px !important;
-                height: auto !important;
-                aspect-ratio: 3 / 2 !important;
-                object-fit: cover !important;
+                width: 180px !important;       /* 精簡寬度至 180px */
+                height: 120px !important;      /* 固定高度維持 3:2 比例 */
+                object-fit: cover !important;  /* 裁切不變形 */
                 border-radius: 6px !important;
-                margin-top: 8px !important;
-                margin-bottom: 8px !important;
+                margin: 8px 0 !important;      /* 修改：上方留白，左右不置中（靠左） */
+                display: block !important;
+                float: none !important;        /* 防止任何浮動干擾 */
+            }
+
+            /* 返回頂部按鈕優化：做成精緻的右下角懸浮圓鈕，不擋字 */
+            .back-to-top {
+                position: fixed !important;
+                bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+                right: 20px !important;
+                width: 44px !important;
+                height: 44px !important;
+                line-height: 44px !important;
+                background: rgba(0, 121, 107, 0.9) !important;
+                color: white !important;
+                text-align: center !important;
+                border-radius: 50% !important;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+                font-size: 0.75rem !important;
+                font-weight: bold !important;
+                z-index: 999;
+                padding: 0 !important;
             }
         }
 		
     </style>
 </head>
-<body>
+<body id="top">
 
 <div class="container">
     <h1>🐘 泰國 11 日盛夏親子之旅 🐘</h1>
@@ -282,7 +361,7 @@
         <strong>$💵฿ 兌泰銖：Superrich Thailand </strong><a href="https://maps.app.goo.gl/mFPwWGHAgn13CD3XA" target="_blank">@CENTRAL LADPRAO(map)</a> , <a href="https://www.superrichthailand.com/#!/en/exchange#rate-section" target="_blank">匯率網頁(比較高)</a><br>
         <strong>$💵฿ 兌泰銖：SuperRich Exchange </strong><a href="https://maps.app.goo.gl/Hjd3Z73oTgvtoY93A" target="_blank">@MRT Chatuchak(map)</a> , <a href="https://www.superrich1965.com/cn/exchange-rate" target="_blank">匯率網頁(比較低)</a><br>
         <strong>$💵฿ 兌泰銖：香港 </strong><a href="https://hk.ttrate.com/zh_hk/?c=THB&b=0&s=1&t=2&sort=note_sell&order=1&f=1" target="_blank">港元兌泰國銖</a><br>
-        <strong>📱📞 Data SIM 實體：</strong> <a href="https://datasimhk.com/ture-dtac%E6%B3%B0%E5%9C%8B10%E6%97%A55g-%E5%85%A8%E7%84%A1%E9%99%90%E4%B8%8D%E9%99%8D%E9%80%9F%E3%80%8A%E8%B3%BC%E8%B2%B72%E5%BC%B5%E5%85%8D%E8%B2%BB%E9%A0%86%E8%B1%9A%E3%80%8B%E7%84%A1%E9%99%90%E4%B8%8A%E7%B6%B2%E5%8D%A1%E6%95%B8%E6%93%9A%E5%8D%A1sim%E5%8D%A1%E9%9B%BB%E8%A9%B1%E5%99%B0data" target="_blank">Truemove 泰國10日5G全無限不降速</a><br>
+        <strong>📱📞 Data SIM 實體：</strong> <a href="https://datasimhk.com/ture-dtac%E6%B3%B0%E5%9C%8B10%E6%97%A55g-%E5%85%A8%E7%84%A1%E9%99%90%E4%B8%8D%E9%99%8D%E9%80%9F%E3%80%8A%E8%B3%BC%E8%B2%B72%E5%BC%B5%E5%85%8D%E8%B2%BB%E9%A0%86%E8%B1%9A%E3%80%8B%E7%84%A1%E9%99%90%E4%B8%8A%E7%B6%B2%E5%8D%A1%E6%5%B5%E6%93%A1%E5%8D%A1sim%E5%8D%A1%E9%9B%BB%E8%A9%B1%E5%99%B0data" target="_blank">Truemove 泰國10日5G全無限不降速</a><br>
         <strong>📱📞 Data eSIM：</strong> <a href="https://www.kkday.com/zh-hk/product/136927-esim-thailand-dtac-5g-7-10-days-unlimited-data?srsltid=AfmBOopaK2vDEmEE1gHesVeFNOIFqmTGNyAwshjF5aSPTsC5A8fqqTv9" target="_blank">KKday 無限流量eSIM(無hotspot)</a><br>
         <strong>📱📞 Data eSIM：</strong> <a href="https://esim.djbcard.com/product/esim-smt-unlimited/" target="_blank">DJB eSIM 無限流量eSIM(hotspot)</a><br>
         <strong>📌 駕照：</strong> 準備好國際駕照 & 香港車牌<br>
@@ -311,644 +390,527 @@
 
     <h2>📑 主行程 🗺️</h2>
 
-	<div id="day01" class="table-wrapper">
-    <h3>08月01日 (Day 01)星期六 - 到達曼谷</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>21:30</td>
-                    <td>香港機場起飛</td>
-                    <td>大約用3小時15分</td>
-                    <td>坐A380✈️</td>
-                    <td>(EK 385)</td>
-                </tr>
-                <tr>
-                    <td>23:45</td>
-                    <td>抵達泰國曼谷素萬那普機場🛬</td>
-                    <td>大約用一小時過關🛂</td>
-                    <td>-</td>
-                    <td>使用 TDAC QR-code</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 01 -->
+	<div id="day01" class="day-section">
+        <h3>08月01日 (Day 01)星期六 - 到達曼谷</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>21:30<br>香港機場起飛</td>
+                        <td>坐A380✈(EK 385)</td>
+                        <td>大約用3小時15分</td>
+                    </tr>
+                    <tr>
+                        <td>23:45<br>抵達泰國曼谷素萬那普機場🛬</td>
+                        <td>過關🛂:大約用一小時</td>
+                        <td>使用 TDAC QR-code</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day02" class="table-wrapper">
-    <h3>08月02日 (Day 02)星期日 - JJ Market</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>00:45<br>出發</td>
-                    <td>包車出發<br>去酒店</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/wTTEZU3d86t55Akk9" target="_blank">The Quarter Ratchayothin by UHG</a><br>
-                        <img src="https://media-cdn.tripadvisor.com/media/photo-s/2e/99/4b/39/caption.jpg" alt="The Quarter Ratchayothin by UHG">
-                    </td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/rmkWFKDmYsJUvcGc6" target="_blank">35-40分鐘</a><br>
-                        Book車🚗<br>
-                        5大人6小孩
-                    </td>
-                    <td>
-                        建議提前 4-3 天預定<br>
-                        <a href="https://www.kkday.com/zh-hk/product/3431-bkk-or-dmk-bangkok-private-transfer" target="_blank">KKday</a><br>
-                        <a href="http://xhslink.com/m/6Ga5iGOvUq7" target="_blank">港青旅国际旅行社@小紅書</a><br>
-						<a href="https://hk.trip.com/?locale=zh-HK&curr=HKD" target="_blank">Trip.com</a>27/7前有88折
-                    </td>
-                </tr>
-                <tr>
-                    <td>01:35<br>左右到達</td>
-                    <td>酒店</td>
-                    <td>Check-in🔑 及休息🛌💤</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>09:30</td>
-                    <td>早餐</td>
-                    <td>酒店自助式早餐</td>
-                    <td>自助式早餐：亞洲風味、西式料理</td>
-                    <td>早餐時間為 06:00 - 10:30</td>
-                </tr>
-                <tr>
-                    <td>10:30</td>
-                    <td>酒店內</td>
-                    <td>
-                        泳池游水&休息<br>
-                        <img src="https://stdcontent.wingontravel.com/processed/c0ed0267-02e2-1017-e0e0-a7f520608069_lfit_600.jpeg" alt="The Quarter Ratchayothin by UHG 泳池">
-                    </td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>12:30<br>左右<br>出發</td>
-                    <td><a href="https://maps.app.goo.gl/BwSHbi47y6wXfks69" target="_blank">恰圖恰Market</a></td>
-                    <td>
-                        搭Sukhumvit Line(Kheha)<br>[Phahonyothin 24 => Mo Chit]<br>
-                        <img src="https://media.gettyimages.com/id/544043218/zh/%E7%85%A7%E7%89%87/night-scene-of-colorful-tent-and-cityscape-at-chatujak-market-secondhand-market-in-bangkok.jpg?s=612x612&w=0&k=20&c=QwO1TPsCC4MGv4osbsbTEgfWNnzIRsgOZdVcrmiZnKg=" alt="恰圖恰Market">
-                    </td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/rtvxakE3UE1fvXrz7" target="_blank">20-25分鐘</a><br>
-                        步行 & 搭BTS (約 ฿17-25 內)
-                    </td>
-                    <td><a href="https://preparetravelplans.com/wp-content/uploads/2019/10/Chatuchak-Weekend-Market-Map.jpg" target="_blank">Market MAP</a></td>
-                </tr>
-                <tr>
-                    <td>17:00<br>左右<br>返酒店</td>
-                    <td>小休</td>
-                    <td>搭Sukhumvit Line(Khu Khot)<br>[Mo Chit => Phahonyothin 24]</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/xerDZCfnKKG59ow89" target="_blank">20-25分鐘</a><br>
-                        步行 & 搭BTS (約 ฿17-25 內)
-                    </td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>18:00<br>出發</td>
-                    <td>晚餐</td>
-                    <td>酒店附近</td>
-                    <td>約5-10分鐘 步行</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>21:00<br>左右</td>
-                    <td>可行夜市或返回酒店</td>
-                    <td>夜市 / 休息<br>
-					<img src="https://itin-dev.wanderlogstatic.com/freeImage/t2MRXjoYdHSC0YVz1t8TtyBq4te4SHgt" alt="Green Vintage Night Market">
-					</td>
-                    <td>約5-10分鐘 步行</td>
-                    <td><a href="https://maps.app.goo.gl/49e5M74ocwrXYjvc6" target="_blank">Green Vintage Night Market</a><br>休息及整理行李<br>明天出發北碧</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 02 -->
+	<div id="day02" class="day-section">
+        <h3>08月02日 (Day 02)星期日 - JJ Market</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>00:45<br>包車出發去酒店<br><a href="https://maps.app.goo.gl/wTTEZU3d86t55Akk9" target="_blank">The Quarter Ratchayothin by UHG</a></td>
+                        <td><img src="https://media-cdn.tripadvisor.com/media/photo-s/2e/99/4b/39/caption.jpg" alt="The Quarter Ratchayothin by UHG"></td>
+                        <td><a href="https://maps.app.goo.gl/rmkWFKDmYsJUvcGc6" target="_blank">Book車🚗35-40分鐘</a><br>5大人6小提前4天預約<br>
+                            <a href="https://www.kkday.com/zh-hk/product/3431-bkk-or-dmk-bangkok-private-transfer" target="_blank">- KKday</a><br>
+                            <a href="http://xhslink.com/m/6Ga5iGOvUq7" target="_blank">- 港青旅国际旅行社@小紅書</a><br>
+                            <a href="https://hk.trip.com/?locale=zh-HK&curr=HKD" target="_blank">- Trip.com(27/7前有88折)</a>
+                        </td>
+                    </tr> <!-- 修正：原本這裡漏掉了結束標籤 -->
+                    <tr>
+                        <td>01:35<br>左右到達酒店</td>
+                        <td>Check-in🔑 及休息🛌💤</td>
+                        <td>-</td>
+					</tr>
+                    <tr>
+                        <td>09:30<br>早餐</td>
+                        <td>酒店自助式早餐<br>時間 06:00 - 10:30</td>
+                        <td>自助式早餐：亞洲風味、西式料理</td>
+					</tr>
+                    <tr>
+                        <td>10:30<br>酒店內</td>
+                        <td>泳池游水&休息<br>
+                            <img src="https://stdcontent.wingontravel.com/processed/c0ed0267-02e2-1017-e0e0-a7f520608069_lfit_600.jpeg" alt="The Quarter Ratchayothin by UHG 泳池">
+						</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>12:30出發<br><a href="https://maps.app.goo.gl/BwSHbi47y6wXfks69" target="_blank">恰圖恰Market</a></td>
+                        <td>搭Sukhumvit Line(Kheha)<br>[Phahonyothin 24 => Mo Chit]<br>
+                            <img src="https://media.gettyimages.com/id/544043218/zh/%E7%85%A7%E7%89%87/night-scene-of-colorful-tent-and-cityscape-at-chatujak-market-secondhand-market-in-bangkok.jpg?s=612x612&w=0&k=20&c=QwO1TPsCC4MGv4osbsbTEgfWNnzIRsgOZdVcrmiZnKg=" alt="恰圖恰Market">
+						</td>
+                        <td><a href="https://maps.app.goo.gl/rtvxakE3UE1fvXrz7" target="_blank">20-25分鐘</a><br>
+                            步行 & 搭BTS (約 ฿17-25 內)<br>
+                            <a href="https://preparetravelplans.com/wp-content/uploads/2019/10/Chatuchak-Weekend-Market-Map.jpg" target="_blank">-Market MAP</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17:00<br>返酒店<br>小休</td>
+                        <td>搭Sukhumvit Line(Khu Khot)<br>[Mo Chit => Phahonyothin 24]</td>
+                        <td><a href="https://maps.app.goo.gl/xerDZCfnKKG59ow89" target="_blank">20-25分鐘</a><br>
+                            步行 & 搭BTS (約 ฿17-25 內)
+						</td>
+                    </tr>
+                    <tr>
+                        <td>18:00晚餐<br>酒店附近 OR 代定</td>
+                        <td>附近,步行約5-10分鐘有商場食肆</td>
+                        <td>-</td>
+					</tr>
+                    <tr>
+                        <td>21:00<br>晚餐完<br>可行夜市或返回酒店</td>
+                        <td>夜市 / 休息<br>
+							<img src="https://itin-dev.wanderlogstatic.com/freeImage/t2MRXjoYdHSC0YVz1t8TtyBq4te4SHgt" alt="Green Vintage Night Market">
+						</td>
+						<td>約5-10分鐘 步行<br>
+							<a href="https://maps.app.goo.gl/49e5M74ocwrXYjvc6" target="_blank">Green Vintage Night Market</a><br>-整理行李明天出發北碧
+						</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day03" class="table-wrapper">
-    <h3>08月03日 (Day 03)星期一 - 北碧</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>08:00</td>
-                    <td>早餐</td>
-                    <td>酒店自助式早餐</td>
-                    <td>自助式早餐：亞洲風味、西式料理</td>
-                    <td>早餐時間為 06:00 - 10:30</td>
-                </tr>
-				<tr>
-                    <td>09:00</td>
-                    <td><a href="https://www.drivecarrental.com/zh/locations/3184/" target="_blank">Meet & Greet: in front of Ratchayothin Hills A representative</a></td>
-                    <td>拎車</td>
-                    <td>酒店附近</td>
-                    <td>睇清楚架車有無刮花或其他問題，仔細位影相及錄影</td>
-                </tr>
-                <tr>
-                    <td>10:00<br>左右<br>出發</td>
-                    <td>出發 <a href="https://maps.app.goo.gl/jL2183HVepExBini6" target="_blank">Bubble in the Forest Cafe</a></td>
-                    <td>
-                        食野 & 打卡<br>
-                        <img src="https://pimg.1px.tw/john547/1670762848-2737014309-g.jpg" alt="Bubble in the Forest">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/wuYJYxScSP3iFxrL8" target="_blank">45分鐘-55分鐘</a></td>
-                    <td>
-                        Bubble in the Forest 座位分佈圖<br><a href="https://www.facebook.com/Bubbleintheforest/" target="_blank">Facebook 預約</a>18/7前<br>
-                        <img src="https://www.wendyjourney.com/wp-content/uploads/2025/08/bubble-in-forest-%E5%9C%B0%E5%9C%96_%E5%B7%A5%E4%BD%9C%E5%8D%80%E5%9F%9F-1.jpg" alt="座位圖">
-                    </td>
-                </tr>
-                <tr>
-                    <td>14:00<br>左右<br>出發</td>
-                    <td>出發 Big C🛒<a href="https://maps.app.goo.gl/GvsRcfFad9Yq4H9C9" target="_blank">Big C Supercenter Kanchanaburi</a></td>
-                    <td>
-                        Big C 食野 & 買野<br>
-                        <img src="https://d3fphkxyf5o5bm.cloudfront.net/image-resize/format=webp,w=720/QwRY54Li1HMwD7oNfofZCLfnYrYadNMcor7WhCyNbF" alt="Big C">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/AmQzYW36w8cbzvR97" target="_blank">1小時25分鐘-1小時35分鐘</a><br>自駕</td>
-                    <td>買補給品（水果、零食、飲料等）<br>牙刷、大毛巾<br>瀑布用品</td>
-                </tr>
-                <tr>
-                    <td>16:30<br>左右<br>出發</td>
-                    <td>去酒店</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a><br>Check-in及休息<br>
-                        <img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/SPGsLivnuPCndkFL7" target="_blank">5分鐘</a><br>自駕</td>
-                    <td><a href="https://drive.google.com/file/d/11MKlr3YLHFErrIpUlWaWZ4DtlZidj82M/view?usp=sharing" target="_blank">Booking Confirmation (需密碼)</a></td>
-                </tr>
-				<tr>
-                    <td>17:30<br>左右<br>出發</td>
-                    <td><a href="https://maps.app.goo.gl/S7oD6v7jFzXnSmBr8" target="_blank">桂河大橋</a></td>
-                    <td>打卡<br><img src="https://ak-d.tripcdn.com/images/1mi5q224x8vqb81e6FD7A_W_640_0_R5_Q80.jpg?proc=source/trip" alt="桂河大橋"></td>
-                    <td>3-5分鐘<br>步行</td>
-                    <td>先到桂河大橋停,<br>再到Keereetara Riverside泊車</td>
-                </tr>
-                <tr>
-                    <td>18:00</td>
-                    <td>晚餐</td>
-                    <td>桂河大橋附近的餐廳<br><a href="https://maps.app.goo.gl/zcY1RXy3bXZf7RSU7" target="_blank">Keereetara Riverside</a><br><img src="https://live.staticflickr.com/65535/54022760470_0eb7c2c772_b.jpg" alt="Keereetara Riverside"></td>
-                    <td>3-5分鐘 步行</td>
-                    <td>僅接受 18:00 前 的訂位<br><a href="https://www.facebook.com/keereeTaraRiverside/" target="_blank">提前預訂河畔位</a>18/7前</td>
-                </tr>
-                <tr>
-                    <td>20:00<br>左右<br>返回</td>
-                    <td>酒店</td>
-					<td>
-                        <a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a><br>休息及整理行李<br>
-                        <img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/pdjHyyFqLWtPCjTu8" target="_blank">5分鐘</a><br>自駕</td>
-                    <td>準備Erawan Waterfall,<br>需要用嘅物品</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 03 -->
+	<div id="day03" class="day-section">
+        <h3>08月03日 (Day 03)星期一 - 北碧</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>08:00<br>早餐</td>
+                        <td>酒店自助式早餐<br>時間 06:00 - 10:30</td>
+                        <td>自助式早餐：亞洲風味、西式料理</td>
+					</tr>
+                    <tr>
+                        <td>09:00<br><a href="https://www.drivecarrental.com/zh/locations/3184/" target="_blank">Meet & Greet: in front of Ratchayothin Hills A representative</a></td>
+                        <td>酒店附近拎車</td>
+                        <td>睇清楚架車有無刮花或其他問題，仔細位影相及錄影</td>
+                    </tr>
+                    <tr>
+                        <td>10:00出發<br><a href="https://maps.app.goo.gl/jL2183HVepExBini6" target="_blank">Bubble in the Forest Cafe</a></td>
+                        <td>食野 & 打卡<br>
+                            <img src="https://pimg.1px.tw/john547/1670762848-2737014309-g.jpg" alt="Bubble in the Forest"> 
+						</td>
+                        <td>Bubble in the Forest 座位分佈圖<img src="https://www.wendyjourney.com/wp-content/uploads/2025/08/bubble-in-forest-%E5%9C%B0%E5%9C%96_%E5%B7%A5%E4%BD%9C%E5%8D%80%E5%9F%9F-1.jpg" alt="座位圖"><br>
+                            <a href="https://www.facebook.com/Bubbleintheforest/" target="_blank">Facebook 預約</a>18/7前
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>14:00出發<br><a href="https://maps.app.goo.gl/GvsRcfFad9Yq4H9C9" target="_blank">🛒Big C Supercenter Kanchanaburi</a></td>
+                        <td>Big C 食野 & 買野<br>
+                            <img src="https://d3fphkxyf5o5bm.cloudfront.net/image-resize/format=webp,w=720/QwRY54Li1HMwD7oNfofZCLfnYrYadNMcor7WhCyNbF" alt="Big C">
+                        </td>
+                        <td><a href="https://maps.app.goo.gl/AmQzYW36w8cbzvR97" target="_blank">1小時25-35分鐘</a>自駕<br>
+                            買補給品（水果、零食、飲料等）、牙刷、大毛巾<br>瀑布用品
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>16:30出發酒店<br><a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a></td>
+                        <td>Check-in及休息<img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
+						</td>
+                        <td><a href="https://maps.app.goo.gl/SPGsLivnuPCndkFL7" target="_blank">5分鐘</a>自駕<br>
+							<a href="https://drive.google.com/file/d/11MKlr3YLHFErrIpUlWaWZ4DtlZidj82M/view?usp=sharing" target="_blank">Booking Confirmation (需密碼)</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17:30出發<br><a href="https://maps.app.goo.gl/S7oD6v7jFzXnSmBr8" target="_blank">桂河大橋</a></td>
+                        <td>打卡<br><img src="https://ak-d.tripcdn.com/images/1mi5q224x8vqb81e6FD7A_W_640_0_R5_Q80.jpg?proc=source/trip" alt="桂河大橋">
+						</td>
+                        <td>步行3-5分鐘<br>先到桂河大橋停車,<br>再到Keereetara Riverside泊車
+						</td>
+                    </tr>
+                    <tr>
+                        <td>18:00晚餐<br><a href="https://maps.app.goo.gl/zcY1RXy3bXZf7RSU7" target="_blank">Keereetara Riverside</a></td>
+                        <td>桂河大橋附近的餐廳<br>
+							<img src="https://live.staticflickr.com/65535/54022760470_0eb7c2c772_b.jpg" alt="Keereetara Riverside">
+						</td>
+                        <td>步行3-5分鐘<br><a href="https://www.facebook.com/keereeTaraRiverside/" target="_blank">18/7前提前預訂河畔位</a>
+						</td>
+                    </tr>
+                    <tr>
+                        <td>20:00返回酒店<br><a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a></td>
+                        <td>休息及整理行李<br>
+							<img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
+						</td>
+                        <td><a href="https://maps.app.goo.gl/pdjHyyFqLWtPCjTu8" target="_blank">5分鐘</a>自駕<br>
+							準備Erawan Waterfall,需要用嘅物品
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day04" class="table-wrapper">
-    <h3>08月04日 (Day 04)星期二 - Erawan Waterfall & Safari Park Kanchanaburi</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>07:45</td>
-                    <td>早餐</td>
-                    <td>食早餐</td>
-                    <td>現點現煮：自助式或單點式早餐</td>
-                    <td>早餐時間為 07:00 - 10:00</td>
-                </tr>
-				<tr>
-                    <td>08:45<br>左右<br>出發</td>
-                    <td>出發瀑布</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/XEatKDSwWcp1jQ9t7" target="_blank">Erawan Waterfall（愛侶灣瀑布）</a>Level 1-3<br>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Erawan_Waterfall_%28Level_2%29.jpg" alt="Erawan Waterfall">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/PauykUYFoMnVxEfz9" target="_blank">1小時10分鐘-1小時20分鐘</a><br>自駕</td>
-                    <td>泊車到停車場步行到瀑布</td>
-                </tr>
-                <tr>
-                    <td>10:00 左右</td>
-                    <td>進入瀑布區</td>
-                    <td>大人300 泰銖、小孩 200 泰銖</td>
-                    <td>15-20分鐘 步行到Level 3</td>
-                    <td>大約逗留1小時</td>
-                </tr>
-				<tr>
-                    <td>11:45左右<br>去食午餐</td>
-                    <td><a href="https://maps.app.goo.gl/bdEwQ33gNzNdf81d9" target="_blank">ร้านอาหารบอลลูน</a></td>
-                    <td><img src="https://www.toyotakan.com/wp-content/uploads/2019/04/Balloon-Delicious-Paradise3-1024x683.jpg" alt="ร้านอาหารบอลลูน"></td>
-                    <td><a href="https://maps.app.goo.gl/M1ujiZninLXcjRb67" target="_blank">50分鐘-55分鐘</a><br>自駕</td>
-                    <td><a href="https://www.toyotakan.com/eat-travel/review-balloon-delicious-paradise/" target="_blank">旅遊Blog</a></td>
-                </tr>
-				<tr>
-                    <td>14:00<br>左右<br>出發</td>
-                    <td>要去油站<br>返酒店</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/71w8KB3tCbm9J2pr6" target="_blank" style="color: red; text-decoration: underline; font-size: 125%;">>- 北碧Shell入油 -<</a><br>
-						<a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a><br>
-                        <img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/bpcFP5nhm6gz3Nov5" target="_blank">35分鐘-40分鐘</a><br>自駕</td>
-                    <td>休息</td>
-                </tr>
-				<tr>
-                    <td>16:00<br>左右<br>出發</td>
-                    <td>出發</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/7q1veCDcCQGEU5sn6" target="_blank">Skywalk Kanchanaburi City</a><br>打卡<br>
-                        <img src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=1210,dpr=1/tour_img/218b3862bc6343599d4c4cbc9396b9ce5ae04665cdff8130a1932cd2d0d64f99.jpg" alt="Skywalk Kanchanaburi City">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/i1NgmwPuem3STGMfA" target="_blank">10分鐘</a><br>自駕</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/WvEgtUnVML7RoLVHA" target="_blank">停泊車</a><br>
-						<a href="https://maps.app.goo.gl/P17MhDvQHs9E8ocj8" target="_blank">位置圖片</a><br>大約逗留1小時
-                    </td>
-                </tr>
-				<tr>
-                    <td>19:00<br>左右<br>出發</td>
-                    <td>返回酒店</td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a><br>休息<br>
-                        <img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/gD33oyZ2zp7KFkdX9" target="_blank">10分鐘</a><br>自駕</td>
-                    <td>大約19:50出發食晚餐</td>
-                </tr>
-                <tr>
-                    <td>18:00<br>左右<br>出發</td>
-                    <td>晚餐</td>
-                    <td><a href="https://maps.app.goo.gl/3XZztpmKN4m3gV1D7" target="_blank">KAAN Riverkwai Restaurant</a><br>
-					<img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/2d/6f/d3/kaan-riverkwai-restaurant.jpg?w=900&h=500&s=1" alt="KAAN Riverkwai Restaurant"></td>
-                    <td><a href="https://maps.app.goo.gl/bkpmVaoVEqAfuysV9" target="_blank">8分鐘</a><br>自駕</td>
-                    <td>僅接受 18:00 前 的訂位<br><a href="https://www.facebook.com/profile.php?id=61558666353057" target="_blank">提前預訂河畔位</a>18/7前</td>
-                </tr>
-                <tr>
-                    <td>20:00 左右</td>
-                    <td>返酒店</td>
-					<td>
-                        <a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a><br>休息及整理行李<br>
-                        <img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel">
-                    </td>
-                    <td><a href="https://maps.app.goo.gl/izM6KxyuuArMMjUZ8" target="_blank">8分鐘</a><br>自駕</td>
-                    <td>休息及整理行李<br>明天出發芭達雅</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 04 -->
+	<div id="day04" class="day-section">
+        <h3>08月04日 (Day 04)星期二 - Erawan Waterfall & Safari Park Kanchanaburi</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>07:45<br>早餐</td>
+                        <td>自助式或單點式早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助式或單點式早餐：亞洲風味、西式料理</td>
+					</tr>
+                    <tr>
+                        <td>08:45出發<br><a href="https://maps.app.goo.gl/XEatKDSwWcp1jQ9t7" target="_blank">Erawan Waterfall（愛侶灣瀑布）</a>Level 1-3</td>
+                        <td>玩水 & 打卡<br>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Erawan_Waterfall_%28Level_2%29.jpg" alt="Erawan Waterfall">
+						</td>
+                        <td><a href="https://maps.app.goo.gl/PauykUYFoMnVxEfz9" target="_blank">1小時10-20分鐘</a>自駕<br>泊車到停車場步行到瀑布
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10:00 進入瀑布區</td>
+                        <td>15-20分鐘 步行到Level 3</td>
+                        <td>大人300 泰銖、小孩 200 泰銖<br>大約逗留1小時</td>
+                    </tr>
+                    <tr>
+                        <td>11:45食午餐<br><a href="https://maps.app.goo.gl/bdEwQ33gNzNdf81d9" target="_blank">ร้านอาหารบอลลูน</a></td>
+                        <td><img src="https://www.toyotakan.com/wp-content/uploads/2019/04/Balloon-Delicious-Paradise3-1024x683.jpg" alt="ร้านอาหารบอลลูน"></td>
+                        <td><a href="https://maps.app.goo.gl/M1ujiZninLXcjRb67" target="_blank">50-55分鐘</a>自駕<br>
+							<a href="https://www.toyotakan.com/eat-travel/review-balloon-delicious-paradise/" target="_blank">旅遊Blog</a>
+						</td>
+                    </tr>
+                    <tr>
+                        <td>14:00要去油站<br>返酒店<br>
+							<a href="https://maps.app.goo.gl/71w8KB3tCbm9J2pr6" target="_blank" style='color: red; text-decoration: underline; font-size: 125%;'>- 北碧Shell入油 -</a><br>
+							<a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a></td>
+                        <td><img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel"></td>
+                        <td><a href="https://maps.app.goo.gl/bpcFP5nmm6gz3Nov5" target="_blank">35-40分鐘</a>自駕<br>休息
+                        </td>
+					</tr>
+                    <tr>
+                        <td>16:30出發<br><a href="https://maps.app.goo.gl/7q1veCDcCQGEU5sn6" target="_blank">Skywalk Kanchanaburi City</a></td>
+                        <td>打卡<br><img src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=1210,dpr=1/tour_img/218b3862bc6343599d4c4cbc9396b9ce5ae04665cdff8130a1932cd2d0d64f99.jpg" alt="Skywalk Kanchanaburi City">
+						</td>
+                        <td><a href="https://maps.app.goo.gl/i1NgmwPuem3STGMfA" target="_blank">10分鐘</a>自駕<br>
+							<a href="https://maps.app.goo.gl/WvEgtUnVML7RoLVHA" target="_blank">停泊車</a> , 
+                            <a href="https://maps.app.goo.gl/P17MhDvQHs9E8ocj8" target="_blank">位置圖片</a><br>大約逗留1小時
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17:45出發晚餐<br><a href="https://maps.app.goo.gl/3XZztpmKN4m3gV1D7" target="_blank">KAAN Riverkwai Restaurant</a></td>
+                        <td><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/2d/6f/d3/kaan-riverkwai-restaurant.jpg?w=900&h=500&s=1" alt="KAAN Riverkwai Restaurant"></td>
+                        <td><a href="https://maps.app.goo.gl/S6ifW77MneFYjb1i6" target="_blank">10分鐘</a>自駕<br><a href="https://www.facebook.com/profile.php?id=61558666353057" target="_blank">18/7前提前預訂河畔位</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>20:00返酒店<br><a href="https://maps.app.goo.gl/EruDzfnpW5zL5SMQ7" target="_blank">Kanchanaburi City Hotel</a></td>
+                        <td>休息及整理行李<br><img src="https://www.taithaione.com/gt/webp/ai/c/2016/12/20/171-c821a297.webp" alt="Kanchanaburi City Hotel"></td>
+                        <td><br>明天出發芭達雅<br>準備去動物園,需要用嘅物品
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day05" class="table-wrapper">
-    <h3>08月05日 (Day 05)星期三 - Meena Café & 出發芭達雅</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>07:30</td>
-                    <td>早餐</td>
-                    <td>食早餐</td>
-                    <td>現點現煮：自助式或單點式早餐</td>
-                    <td>早餐時間為 07:00 - 10:00</td>
-                </tr>
-                <tr>
-                    <td>08:30</td>
-                    <td>酒店大堂</td>
-                    <td>Check-out</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-				<tr>
-                    <td>08:45<br>左右<br>出發</td>
-                    <td><a href="https://maps.app.goo.gl/XsyNxjCd5kWuFmxz7" target="_blank">Safari Park Kanchanaburi</a></td>
-                    <td><img src="https://ak-d.tripcdn.com/images//0586e12000n0qr3x65928_C_568_320.jpg_.webp?_fr=wc" alt="Safari Park"></td>
-                    <td><a href="https://maps.app.goo.gl/bUNRDjvWEhnYVTZL9" target="_blank">25分鐘-35分鐘</a><br>自駕</td>
-                    <td><a href="https://blog-static.kkday.com/zh-hk/blog/wp-content/uploads/59a05a9c-8c2e-457c-b85b-d244c90c549d.jpg" target="_blank">Park MAP</a></td>
-                </tr>
-                <tr>
-                    <td>12:15<br>左右<br>出發</td>
-                    <td><a href="https://maps.app.goo.gl/HexufCuxaBDWCxAVA" target="_blank">Meena Café</a></td>
-                    <td>打卡 & 飲野<br>
-                        <img src="https://mconthego.com/wp-content/uploads/2018/10/meena.jpg" alt="Meena Café">
-                    </td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/ypHNowsVgAUHYE338" target="_blank">55分鐘-60分鐘</a><br>自駕</td>
-                    <td>大約逗留2小時</td>
-                </tr>
-				<tr>
-                    <td>15:15<br>左右<br>出發</td>
-                    <td>要去油站<br>
-					<a href="https://maps.app.goo.gl/WFJFMp91ThsawT6B7" target="_blank">曼谷世界市場</a></td>
-                    <td><a href="https://maps.app.goo.gl/xpQBw77BuUitA1JDA" target="_blank" style="color: red; text-decoration: underline; font-size: 125%;">>- 北碧PTT入油 -<</a><br>打卡 & 買野
-						<br>
-                        <img src="https://pimg.1px.tw/john547/1561684908-416827790.jpg?v=1561685457" alt="曼谷世界市場">
-                    </td>
-                    <td>
-						<a href="https://maps.app.goo.gl/7Vi9DxqMNuMKsRpn9" target="_blank">15分鐘-25分鐘</a><br>
-                        <a href="https://maps.app.goo.gl/rJMfQUL7RRL2eSgN8" target="_blank">1小時40分鐘-1小時45分鐘</a><br>自駕
-                    </td>
-                    <td>
-                        <a href="https://maps.app.goo.gl/kSt1Nh6v2KtJtn3k7" target="_blank">市場停泊車</a><br>
-						<a href="https://maps.app.goo.gl/RRy3sWpUMHczpZqf6" target="_blank">位置圖片</a><br>大約逗留2.5小時
-                    </td>
-                </tr>
-                <tr>
-                    <td>20:25<br>出發酒店</td>
-                    <td><a href="https://maps.app.goo.gl/dzm7QwnUvPQqgd2n8" target="_blank">Sunshine Hip Hotel</a></td>
-                    <td><img src="https://www.coral.ge/_next/image?url=https%3A%2F%2Fcontent.coral.ge%2Fresize%2F1600x900%2Fmedia%2Fimage%2F33%2F25389%2F636756404432074587.jpg&w=1920&q=70" alt="Sunshine Hip Hotel"></td>
-                    <td><a href="https://maps.app.goo.gl/Zadoz2D8yWNr34HJ8" target="_blank">2小時15分鐘-2小時25分鐘</a><br>自駕</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>22:45 左右</td>
-                    <td>酒店Check-out</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>休息及整理行李<br>明天轉villa</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 05 -->
+	<div id="day05" class="day-section">
+        <h3>08月05日 (Day 05)星期三 - Meena Café & 出發芭達雅</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>07:30<br>早餐</td>
+                        <td>自助式或單點式早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助式或單點式早餐：亞洲風味、西式料理</td>
+					</tr>
+                    <tr>
+                        <td>08:30</td>
+                        <td>酒店大堂</td>
+                        <td>Check-out</td>
+                    </tr>
+                    <tr>
+                        <td>08:45出發<br><a href="https://maps.app.goo.gl/XsyNxjCd5kWuFmxz7" target="_blank">Safari Park Kanchanaburi</a></td>
+                        <td><img src="https://ak-d.tripcdn.com/images//0586e12000n0qr3x65928_C_568_320.jpg_.webp?_fr=wc" alt="Safari Park"></td>
+                        <td><a href="https://maps.app.goo.gl/bUNRDjvWEhnYVTZL9" target="_blank">25-35分鐘</a>自駕<br>
+							<a href="https://blog-static.kkday.com/zh-hk/blog/wp-content/uploads/59a05a9c-8c2e-457c-b85b-d244c90c549d.jpg" target="_blank">Park MAP</a>
+						</td>
+                    </tr>
+                    <tr>
+                        <td>12:15出發<br><a href="https://maps.app.goo.gl/HexufCuxaBDWCxAVA" target="_blank">Meena Café</a></td>
+                        <td>打卡 & 午餐<br><img src="https://mconthego.com/wp-content/uploads/2018/10/meena.jpg" alt="Meena Café"></td>
+                        <td><a href="https://maps.app.goo.gl/ypHNowsVgAUHYE338" target="_blank">55-60分鐘</a>自駕<br>大約逗留2小時
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>15:15要去油站<br><a href="https://maps.app.goo.gl/xpQBw77BuUitA1JDA" target="_blank" style="color: red; text-decoration: underline; font-size: 125%;">- 北碧PTT入油 -</a><br>再去<a href="https://maps.app.goo.gl/WFJFMp91ThsawT6B7" target="_blank">曼谷世界市場</a></td>
+                        <td>打卡 & 買野 & 晚餐<br><img src="https://pimg.1px.tw/john547/1561684908-416827790.jpg?v=1561685457" alt="曼谷世界市場"></td>
+                        <td><a href="https://maps.app.goo.gl/7Vi9DxqMNuMKsRpn9" target="_blank">15-25分鐘</a>油站<br>
+							<a href="https://maps.app.goo.gl/rJMfQUL7RRL2eSgN8" target="_blank">1小時40-45分鐘</a>自駕<br><br>
+							<a href="https://maps.app.goo.gl/kSt1Nh6v2KtJtn3k7" target="_blank">市場停泊車</a><br>
+                            <a href="https://maps.app.goo.gl/RRy3sWpUMHczpZqf6" target="_blank">位置圖片</a><br>大約逗留2.5小時
+						</td>
+                    </tr>
+                    <tr>
+                        <td>20:25出發酒店<br><a href="https://maps.app.goo.gl/dzm7QwnUvPQqgd2n8" target="_blank">Sunshine Hip Hotel</a></td>
+                        <td><img src="https://www.coral.ge/_next/image?url=https%3A%2F%2Fcontent.coral.ge%2Fresize%2F1600x900%2Fmedia%2Fimage%2F33%2F25389%2F636756404432074587.jpg&w=1920&q=70" alt="Sunshine Hip Hotel"><br></td>
+                        <td><a href="https://maps.app.goo.gl/Zadoz2D8yWNr34HJ8" target="_blank">2小時15-25分鐘</a>自駕</td>
+                    </tr>
+                    <tr>
+                        <td>22:45到酒店</td>
+                        <td>Check-out</td>
+                        <td>休息及整理行李<br>明天轉villa</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day06" class="table-wrapper">
-    <h3>08月06日 (Day 06)星期四 - 入住Villa</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>09:00</td>
-                    <td>早餐</td>
-                    <td>拎埋行李食早餐</td>
-                    <td>自助早餐：多國菜、西式自助</td>
-                    <td>早餐時間為 07:00 - 10:00</td>
-                </tr>
-				<tr>
-                    <td>11:30 左右</td>
-                    <td>準備Check-out去<br><a href="https://maps.app.goo.gl/MvRr9ACfFUvHGD6o7" target="_blank">Big C Supercenter South Pattaya</a></td>
-                    <td><img src="https://image.soidb.com/pattaya/zm/031302002_01.jpg" alt="Big C Supercenter South Pattaya"></td>
-                    <td><a href="https://maps.app.goo.gl/umks4Sw2bquEMiJi7" target="_blank">20分鐘-25分鐘</a><br>自駕</td>
-                    <td>食Lunch<br>買BBQ野食及用品<br>買明天出島用品及早餐</td>
-                </tr>
-				<tr>
-                    <td>15:00 左右</td>
-                    <td>要去油站<br>出發villa<br><a href="https://maps.app.goo.gl/p69u6E8xJTzJQxLaA" target="_blank">(Chon Buri)Pattaya City Villa</a></td>
-                    <td><a href="https://maps.app.goo.gl/pxSWnE2fHG7mtVjj8" target="_blank" style="color: red; text-decoration: underline; font-size: 125%;">>- 芭達雅PTT入油 -<</a><br>
-					<img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1483087418452716184/original/4dbf329a-e0e6-40e5-9a7d-2de9726a174c.jpeg?im_w=1200" alt="(Chon Buri)Pattaya City Villa"></td>
-                    <td><a href="https://maps.app.goo.gl/kpCXkSJEn66mmgMYA" target="_blank">10分鐘-20分鐘</a><br>
-					<a href="https://maps.app.goo.gl/3pM5fda2BwtzEDP38" target="_blank">5分鐘</a><br>自駕</td>
-                    <td>準備BBQ</td>
-                </tr>
-                <tr>
-                    <td>20:00 左右</td>
-                    <td>-</td>
-                    <td>休息及整理行李</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 06 -->
+	<div id="day06" class="day-section">
+        <h3>08月06日 (Day 06)星期四 - 入住Villa</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00<br>早餐</td>
+                        <td>自助早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助早餐：多國菜、西式自助</td>
+					</tr>
+					<tr>
+                        <td>11:30 Check-out去<br><a href="https://maps.app.goo.gl/MvRr9ACfFUvHGD6o7" target="_blank">Big C Supercenter South Pattaya</a></td>
+                        <td>食Lunch<br>買BBQ野食及用品<br>買明天出島用品及早餐<br><img src="https://image.soidb.com/pattaya/zm/031302002_01.jpg" alt="Big C Supercenter South Pattaya"></td>
+                        <td><a href="https://maps.app.goo.gl/umks4Sw2bquEMiJi7" target="_blank">20-25分鐘</a>自駕</td>
+                    </tr>
+                    <tr>
+                        <td>15:00 去油站<br>再出發villa<br><a href="https://maps.app.goo.gl/pxSWnE2fHG7mtVjj8" target="_blank" style="color: red; text-decoration: underline; font-size: 125%;">- 芭達雅PTT入油 -</a><br>
+							<a href="https://maps.app.goo.gl/p69u6E8xJTzJQxLaA" target="_blank">(Chon Buri)Pattaya City Villa</a></td>
+                        <td><img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1483087418452716184/original/4dbf329a-e0e6-40e5-9a7d-2de9726a174c.jpeg?im_w=1200" alt="(Chon Buri)Pattaya City Villa"></td>
+                        <td><a href="https://maps.app.goo.gl/kpCXkSJEn66mmgMYA" target="_blank">10-20分鐘</a>油站<br>
+							<a href="https://maps.app.goo.gl/3pM5fda2BwtzEDP38" target="_blank">5分鐘</a>自駕<br><br>準備BBQ
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td>20:00 左右</td>
+                        <td>休息及整理行李</td>
+                        <td>準備去莎邁珊島,需要用嘅物品(早餐)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day07" class="table-wrapper">
-    <h3>08月07日 (Day 07)星期五 - 莎邁珊島</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>06:30</td>
-                    <td>起身</td>
-                    <td>出發去碼頭
-					<br><a href="https://maps.app.goo.gl/DL7yTkgDbcmLQ2Y56" target="_blank">Khao Ma Jor Pier</a></td>
-                    <td><a href="https://maps.app.goo.gl/wbNV3VvxxZ9eyZHZ6" target="_blank">1小時</a><br>自駕</td>
-                    <td>要帶野食去</td>
-                </tr>
-				<tr>
-                    <td>07:30</td>
-                    <td>薩美山包船半日</td>
-                    <td>芭堤雅薩美山包船半日遊【浮潛+海釣+沙灘燒烤】</td>
-                    <td>07:30：抵達碼頭<br>-(ถึงท่าเรือ)<br><br>
-					08:00：從碼頭出發<br>-(ออกเดินทางจากท่าเรือ)<br><br>
-					08:15：釣魚與釣魷魚（1小時45分鐘）<br>-(ตกปลาและจับหมึก (1 ชั่วโมง 45 นาที))<br><br>
-					<del>"這個不用去" 10:00：前往 Samae San 觀景點拍照打卡（船頭）<br>-("กิจกรรมนี้เป็นทางเลือก" 10:00: ไปถ่ายรูปที่จุดชมวิวซาแมซาน (หัวเรือ))</del><br><br>
-					10:15：浮潛觀賞小丑魚與珊瑚。團隊將指導您如何使用浮潛裝備（60分鐘）<br>-(ดำน้ำตื้นชมปลาการ์ตูนและปะการัง ทีมงานจะแนะนำวิธีการใช้อุปกรณ์ดำน้ำตื้น (60 นาที))<br><br>
-					<del>"這個不用去" 10:15：浮潛觀賞小丑魚與珊瑚（Rong Khon, Yung Klua, Rong Nang）（45分鐘）<br>-("กิจกรรมนี้เป็นทางเลือก" 10:15: ดำน้ำตื้นชมปลาการ์ตูนและปะการัง (ร่องโขน, ยุงคลัว, ร่องนาง) (45 นาที))</del><br><br>
-					11:15：玩立槳、游泳、放鬆及海灘野餐（1小時30分鐘）<br>-(พายเรือยืน (Stand-up paddleboarding), ว่ายน้ำ, พักผ่อน และปิกนิกริมชายหาด (1 ชั่วโมง 30 นาที))<br><br>
-					12:45：從島嶼出發, 返回碼頭 <br>- (ออกเดินทางจากเกาะและกลับถึงท่าเรือ)</td>
-                    <td><a href="http://xhslink.com/m/80qzlByJ3SM" target="_blank">泽泰旅行@小紅書</a><br>------<br>
-					<a href="https://drive.google.com/file/d/16eO-ta3CUtseR7ZBbZ-jTEsBZAftRwWr/view?usp=sharing" target="_blank">Seasite Travel Booking Confirmation (需密碼)</a></td>
-                </tr>
-				<tr>
-                    <td>13:00</td>
-                    <td>返回碼頭</td>
-                    <td><a href="https://maps.app.goo.gl/DL7yTkgDbcmLQ2Y56" target="_blank">Khao Ma Jor Pier</a></td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>20:00 左右</td>
-                    <td>返房</td>
-                    <td>休息及整理行李</td>
-                    <td>-</td>
-                    <td>明天出發莎邁珊島</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 07 -->
+	<div id="day07" class="day-section">
+        <h3>08月07日 (Day 07)星期五 - 莎邁珊島</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>06:30 起身出發去碼頭<br><a href="https://maps.app.goo.gl/DL7yTkgDbcmLQ2Y56" target="_blank">Khao Ma Jor Pier</a></td>
+                        <td><img src="https://pimg.1px.tw/john547/1693620212-3984655743-g.jpg" alt="Khao Ma Jor Pier"></td>
+                        <td><a href="https://maps.app.goo.gl/wbNV3VvxxZ9eyZHZ6" target="_blank">1小時</a>自駕<br>要帶野食去</td>
+                    </tr>
+                    <tr>
+                        <td>07:30<br>薩美山包船半日</td>
+                        <td>芭堤雅薩美山包船半日遊【浮潛+海釣+沙灘燒烤】<br><br><br>
+                        07:30：抵達碼頭<br>-(ถึงท่าเรือ)<br><br>
+                        08:00：從碼頭出發<br>-(ออกเดินทางจากท่าเรือ)<br><br>
+                        08:15：釣魚與釣魷魚（1小時45分鐘）<br>-(ตกปลาและจับหมึก (1 ชั่วโมง 45 นาที))<br><br>
+                        <del>"這個不用去" 10:00：前往 Samae San 觀景點拍照打卡（船頭）<br>-("กิจกรรมนี้เป็นทางเลือก" 10:00: ไปถ่ายรูปที่จุดชมวิวซาแมซาน (หัวเรือ))</del><br><br>
+                        10:15：浮潛觀賞小丑魚與珊瑚。團隊將指導您如何使用浮潛裝備（60分鐘）<br>-(ดำน้ำตื้นชมปลาการ์ตูนและปะการัง ทีมงานจะแนะนำวิธีการใช้อุปกรณ์ดำน้ำตื้น (60 นาที))<br><br>
+                        <del>"這個不用去" 10:15：浮潛觀賞小丑魚與珊瑚（Rong Khon, Yung Klua, Rong Nang）（45分鐘）<br>-("กิจกรรมนี้เป็นทางเลือก" 10:15: ดำน้ำตื้นชมปลาการ์ตูนและปะการัง (ร่องโขน, ยุงคลัว, ร่องนาง) (45 นาที))</del><br><br>
+                        11:15：玩立槳、游泳、放鬆及海灘野餐（1小時30分鐘）<br>-(พายเรือยืน (Stand-up paddleboarding), ว่าyน้ำ, พักผ่อน 和ปิกนิกริมชายหาด (1 ชั่วโมง 30 นาที))<br><br>
+                        12:45：從島嶼出發, 返回碼頭 <br>- (ออกเดินทางจากเกาะ和กลับถึงท่าเรือ)</td>
+                        <td><a href="http://xhslink.com/m/80qzlByJ3SM" target="_blank">泽泰旅行@小紅書</a><br>------<br>
+                        <a href="https://drive.google.com/file/d/16eO-ta3CUtseR7ZBbZ-jTEsBZAftRwWr/view?usp=sharing" target="_blank">Seasite Travel Booking Confirmation (需密碼)</a></td>
+                    </tr>
+                    <tr>
+                        <td>13:00 返回碼頭<br><a href="https://maps.app.goo.gl/DL7yTkgDbcmLQ2Y56" target="_blank">Khao Ma Jor Pier</a></td>
+                        <td><img src="https://pimg.1px.tw/john547/1693620212-3984655743-g.jpg" alt="Khao Ma Jor Pier"></td>
+                        <td>-</td>
+                    </tr>
+					<tr>
+                        <td>13:15 返芭達雅食午餐<br><a href="https://maps.app.goo.gl/" target="_blank">食午餐</a></td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>20:00 左右</td>
+                        <td>返房</td>
+                        <td>休息及整理行李</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day08" class="table-wrapper">
-    <h3>08月08日 (Day 08)星期六 - 代定</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-				 <tr>
-                    <td>09:00</td>
-                    <td>早餐</td>
-                    <td>酒店自助式早餐</td>
-                    <td>自助式早餐：亞洲風味、西式料理</td>
-                    <td>早餐時間為 06:00 - 10:30</td>
-                </tr>
-                <tr>
-                    <td>20:00 左右</td>
-                    <td>返房</td>
-                    <td>休息及整理行李</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 08 -->
+	<div id="day08" class="day-section">
+        <h3>08月08日 (Day 08)星期六 - 代定</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td>09:00<br>早餐</td>
+                        <td>自助早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助早餐：多國菜、西式自助</td>
+					</tr>
+                    <tr>
+                        <td>20:00 左右</td>
+                        <td>返房</td>
+                        <td>休息及整理行李</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day09" class="table-wrapper">
-    <h3>08月09日 (Day 09)星期日 - 入住水上樂園酒店</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>09:00</td>
-                    <td>早餐</td>
-                    <td>酒店自助式早餐</td>
-                    <td>自助式早餐：亞洲風味、西式料理</td>
-                    <td>早餐時間為 06:00 - 10:30</td>
-                </tr>
-				<tr>
-                    <td>16:00 左右</td>
-                    <td>Tappia Floating Cafe 海上咖啡廳</td>
-                    <td>休息及整理行李</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>20:00 左右</td>
-                    <td>返房</td>
-                    <td>休息及整理行李</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 09 -->
+	<div id="day09" class="day-section">
+        <h3>08月09日 (Day 09)星期日 - 入住水上樂園酒店</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00<br>早餐</td>
+                        <td>自助早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助早餐：多國菜、西式自助</td>
+					</tr>
+                    <tr>
+                        <td>16:00 左右</td>
+                        <td>Tappia Floating Cafe 海上咖啡廳</td>
+                        <td>休息及整理行李</td>
+                    </tr>
+                    <tr>
+                        <td>20:00 左右</td>
+                        <td>返房</td>
+                        <td>休息及整理行李</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day10" class="table-wrapper">
-    <h3>08月10日 (Day 10)星期一 - 代定</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>09:00</td>
-                    <td>早餐</td>
-                    <td>酒店自助式早餐</td>
-                    <td>自助式早餐：亞洲風味、西式料理</td>
-                    <td>早餐時間為 06:00 - 10:30</td>
-                </tr>
-				<tr>
-                    <td>20:00 左右</td>
-                    <td>返房</td>
-                    <td>休息及整理行李</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 10 -->
+	<div id="day10" class="day-section">
+        <h3>08月10日 (Day 10)星期一 - 代定</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00<br>早餐</td>
+                        <td>自助早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助早餐：多國菜、西式自助</td>
+					</tr>
+                    <tr>
+                        <td>20:00 左右</td>
+                        <td>返房</td>
+                        <td>休息及整理行李</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-	<div id="day11" class="table-wrapper">
-    <h3>08月11日 (Day 11)星期二 - 返香港</h3>
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>時間 🕒</th>
-                    <th>活動 🎉 / 地點 🚩</th>
-                    <th>說明 🏷️</th>
-                    <th>交通 🚗（時間 ⏱️ / 費用 💰）</th>
-                    <th>備註 ✍️</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>09:00</td>
-                    <td>早餐</td>
-                    <td>酒店自助式早餐</td>
-                    <td>自助式早餐：亞洲風味、西式料理</td>
-                    <td>早餐時間為 06:00 - 10:30</td>
-                </tr>
-                <tr>
-                    <td>14:15</td>
-                    <td>素萬那普機場起飛</td>
-                    <td>大約用3小時</td>
-                    <td>坐A380✈️</td>
-                    <td>(EK 384)</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Day 11 -->
+	<div id="day11" class="day-section">
+        <h3>08月11日 (Day 11)星期二 - 返香港</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間 🕒 / 地點 🚩</th>
+                        <th>活動 🎉 / 說明 🏷️</th>
+                        <th>交通 🚗 / 備註 ✍️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00<br>早餐</td>
+                        <td>自助早餐<br>時間 07:00 - 10:00</td>
+                        <td>自助早餐：多國菜、西式自助</td>
+					</tr>
+                    <tr>
+                        <td>14:15 素萬那普機場起飛</td>
+                        <td>坐A380✈️(EK 384)</td>
+                        <td>大約用3小時</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 	<div id="food01" class="table-wrapper">
@@ -1004,6 +966,7 @@
             </tbody>
         </table>
     </div>
+    </div>
 
 	<div id="food02" class="table-wrapper">
 	<h2>🍽️ 桂河大橋附近 餐廳/食肆 🍴 🏢</h2>
@@ -1036,7 +999,7 @@
 						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式大蝦炒金邊粉</strong>：經典的地道風味，大蝦新鮮且火候十足。<br>
 						<br>
 						<strong>小食：===============></strong><br>	
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式魚餅 (Tod Mun Pla)</strong>：口感紮實，帶有濃郁的檸檬葉與香料香氣。<br>
+						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式魚餅 (Tod Mun Pla)</strong>：口感紮實，帶有濃源的檸檬葉與香料香氣。<br>
 						2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">炭烤豬頸肉 (Grilled Pork Neck)</strong>：肥瘦均勻，烤至微焦香，沾上秘製酸辣醬汁。<br>
 						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">沙嗲雞肉串 (Chicken Satay)</strong>：醃漬入味，配上香甜的花生蘸醬，是大人小孩都愛的小食。<br>
 						<br>
@@ -1055,6 +1018,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
     </div>
 
 	<div id="NM01" class="table-wrapper">	
@@ -1104,6 +1068,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
     </div>
 	
 	<h2>🚗 租車 🚗</h2>
@@ -1165,7 +1130,7 @@
                     <td>9592+CV Tha Kradan, 西沙瓦縣北碧泰國</td>
                 </tr>
 				<tr>
-                    <td>芭達雅(PTT Station ปตท.จิฟฟี่ชลบุรี-พัทยากลาง)</td>
+                    <td>芭達雅(PTT Station ปตท.จิфฟี่ชลบุรี-พัทยากลาง)</td>
                     <td><a href="https://maps.app.goo.gl/5xQbhgXkWTgUbP3E9" target="_blank">WWW3+5Q3 Unnamed Road Pattaya City, Bang Lamung District, Chon Buri 20150泰國</a></td>
                     <td>24小時</td>
                     <td>WWW3+5Q3 Unnamed Road Pattaya City</td>
@@ -1188,7 +1153,7 @@
             <tbody>
                 <tr>
                     <td>tokiwash สาขา กาญจนบุรี</td>
-                    <td><a href="https://maps.app.goo.gl/XEfbguxgJqCQMoJj8" target="_blank">ถ. เวียดนาม ตำบล บ้านใต้ บ้านใต้ Mueang Kanchanaburi District, Kanchanaburi 71000泰國</a></td>
+                    <td><a href="https://maps.app.goo.gl/XEfbguxgJqCQMoJj8" target="_blank">ถ. 韋越南 丹卜 班戴 班戴 Mueang Kanchanaburi District, Kanchanaburi 71000泰國</a></td>
                     <td>24小時</td>
                     <td>2GR4+FW Ban Tai, Mueang Kanchanaburi District, 北碧泰國</td>
                 </tr>
@@ -1244,23 +1209,25 @@
         </div>
     </footer>
 	
-	<!-- JavaScript -->
-    <script>
-        // 平滑滾動
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
-	    </main>
-	<!-- 返回頂部按鈕 -->
-	<a href="#top" style="position: fixed; bottom: 20px; right: 20px; padding: 10px; background: #333; color: white; text-decoration: none;">返回TOP</a>
-	
 </div>
 
+<!-- 返回頂部按鈕 -->
+<a href="#top" class="back-to-top">TOP</a>
+
+<!-- JavaScript -->
+<script>
+    // 平滑滾動
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>
