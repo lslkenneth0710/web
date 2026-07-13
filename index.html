@@ -2,44 +2,136 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>我的多功能分類網站</title>
+    <title>我的多功能分類網站 - 美化版</title>
+    <style>
+        /* 1. 全域設定：換個好看的字體，並把外邊距歸零 */
+        body {
+            font-family: 'Segoe UI', Microsoft JhengHei, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9; /* 淺灰色背景，看久了不傷眼 */
+            color: #333333;
+        }
+
+        /* 2. 頁首美化 */
+        header {
+            background-color: #1e3d59; /* 深藍色 */
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        /* 3. 導覽列美化（把直向清單變成橫向選單） */
+        nav {
+            background-color: #17b978; /* 活力綠 */
+            position: sticky;          /* 捲動時會固定在最上方 */
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style: none; /* 去除點點 */
+            margin: 0;
+            padding: 0;
+            display: flex;    /* 關鍵：讓選單變成橫向排列 */
+            justify-content: center;
+        }
+        nav li a {
+            display: block;
+            color: white;
+            text-decoration: none; /* 去除超連結底線 */
+            padding: 15px 25px;
+            font-weight: bold;
+            transition: 0.3s;    /* 讓滑鼠懸停效果變平滑 */
+        }
+        nav li a:hover {
+            background-color: #118f5c; /* 滑鼠移上去時變深綠 */
+        }
+
+        /* 4. 主要內容區區塊設定 */
+        main {
+            max-width: 900px; /* 限制網頁最大寬度，置中好看 */
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background-color: #ffffff; /* 白色卡片背景 */
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;        /* 圓角 */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* 微妙的陰影 */
+        }
+
+        section h2 {
+            color: #1e3d59;
+            border-bottom: 3px solid #17b978; /* 標題下方的裝飾線 */
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* 5. 文章卡片美化 */
+        article {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #ff6e40; /* 左側亮眼橘色邊框 */
+            border-radius: 4px;
+        }
+        article h3 {
+            margin-top: 0;
+            color: #222;
+        }
+        article a {
+            color: #ff6e40;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        article a:hover {
+            text-decoration: underline;
+        }
+
+        /* 6. 頁尾美化 */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1e3d59;
+            color: white;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 1. 網站標題 -->
     <header>
         <h1>全球探索誌</h1>
         <p>歡迎來到我的綜合內容網站，這裡涵蓋了各種不同的領域。</p>
     </header>
 
-    <hr> <!-- 一條分隔線 -->
-
-    <!-- 2. 導覽列（分類目錄） -->
     <nav>
-        <h2>網站分類目錄</h2>
         <ul>
-            <li><a href="#tech">科技焦點 (Technology)</a></li>
-            <li><a href="https://lslkenneth0710.github.io/web/Travel/index.html" target="_blank" rel="noopener noreferrer">旅遊足跡 (Travel)</a></li>
-            <li><a href="food">美食饗宴 (Food)</a></li>
+            <li><a href="#tech">💻 科技焦點</a></li>
+            <li><a href="#https://lslkenneth0710.github.io/web/Travel/index.html">✈️ 旅遊足跡</a></li>
+            <li><a href="#food">🍕 美食饗宴</a></li>
         </ul>
     </nav>
 
-    <hr>
-
-    <!-- 3. 主要內容區（各大範疇） -->
     <main>
 
-        <!-- 範疇 A：科技 -->
         <section id="tech">
             <h2>💻 科技焦點</h2>
-            <p>分享最新的科技趨勢與數位生活。</p>
             
             <article>
                 <h3>【人工智慧】2026年 AI 如何改變我們的生活？</h3>
                 <p>探討最新一代人工智慧在工作、學習與創意產業上的實際應用與未來發展...</p>
                 <a href="#">閱讀更多...</a>
             </article>
-            <br>
+            
             <article>
                 <h3>【硬體開箱】最新款折疊螢幕手機評測</h3>
                 <p>今年各大廠商紛紛推出規格強悍的折疊手機，本文將帶來最詳細的效能與續航力測試...</p>
@@ -47,12 +139,8 @@
             </article>
         </section>
 
-        <br><hr><br>
-
-        <!-- 範疇 B：旅遊 -->
         <section id="travel">
             <h2>✈️ 旅遊足跡</h2>
-            <p>帶你環遊世界，探索私房景點。</p>
             
             <article>
                 <h3>【日本】京都深秋賞楓私房路線推薦</h3>
@@ -61,12 +149,8 @@
             </article>
         </section>
 
-        <br><hr><br>
-
-        <!-- 範疇 C：美食 -->
         <section id="food">
             <h2>🍕 美食饗宴</h2>
-            <p>尋找街頭巷尾的極致美味。</p>
             
             <article>
                 <h3>【台北】捷運中山站必吃拉麵地圖</h3>
@@ -77,9 +161,6 @@
 
     </main>
 
-    <br><hr>
-
-    <!-- 4. 頁尾資訊 -->
     <footer>
         <p>© 2026 全球探索誌. 保留所有權利。</p>
     </footer>
