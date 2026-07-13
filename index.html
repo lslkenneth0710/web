@@ -2,115 +2,191 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>我的多功能分類網站 - 美化版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>現代結構化分類網站 - 完整版</title>
     <style>
-        /* 1. 全域設定：換個好看的字體，並把外邊距歸零 */
+        /* ==========================================================================
+           1. 全域初始化 (Global Reset & Typography)
+           ========================================================================== */
         body {
-            font-family: 'Segoe UI', Microsoft JhengHei, sans-serif;
-            line-height: 1.6;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
             margin: 0;
             padding: 0;
-            background-color: #f4f6f9; /* 淺灰色背景，看久了不傷眼 */
+            background-color: #f0f2f5; /* 舒適的淡灰色背景 */
             color: #333333;
         }
 
-        /* 2. 頁首美化 */
+        /* ==========================================================================
+           2. 頁首與橫幅 (Header)
+           ========================================================================== */
         header {
-            background-color: #1e3d59; /* 深藍色 */
+            background-color: #1e3d59; /* 深藍底色 */
             color: #ffffff;
             text-align: center;
-            padding: 40px 20px;
+            /* [盒子模型應用]：內襯距讓文字擁有舒適的呼吸空間 */
+            padding: 50px 20px;
         }
         header h1 {
-            margin: 0;
+            margin: 0 0 10px 0;
             font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+        header p {
+            margin: 0;
+            color: #b3cde3;
+            font-size: 1.1em;
         }
 
-        /* 3. 導覽列美化（把直向清單變成橫向選單） */
+        /* ==========================================================================
+           3. 導覽列與彈性盒子 (Navigation & Flexbox)
+           ========================================================================== */
         nav {
             background-color: #17b978; /* 活力綠 */
-            position: sticky;          /* 捲動時會固定在最上方 */
+            position: sticky;          /* 網頁滾動時會固定在最上方 */
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        nav ul {
-            list-style: none; /* 去除點點 */
-            margin: 0;
-            padding: 0;
-            display: flex;    /* 關鍵：讓選單變成橫向排列 */
-            justify-content: center;
-        }
-        nav li a {
-            display: block;
-            color: white;
-            text-decoration: none; /* 去除超連結底線 */
-            padding: 15px 25px;
-            font-weight: bold;
-            transition: 0.3s;    /* 讓滑鼠懸停效果變平滑 */
-        }
-        nav li a:hover {
-            background-color: #118f5c; /* 滑鼠移上去時變深綠 */
+            z-index: 1000;
+            /* [盒子模型應用]：下方加一點微弱的陰影，製造出層次感 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* 4. 主要內容區區塊設定 */
+        nav ul {
+            list-style: none; /* 去除原本清單的黑點 */
+            margin: 0;
+            padding: 0;
+            
+            /* 【彈性盒子 Flexbox 魔法啟動】 */
+            display: flex;            /* 讓子元素 <li> 橫向並排 */
+            justify-content: center;   /* 讓所有目錄項目在水平方向完美置中 */
+            align-items: center;       /* 垂直方向也完美置中 */
+        }
+
+        nav li a {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;    /* 去除超連結底線 */
+            font-weight: 600;
+            font-size: 1.05em;
+            
+            /* [盒子模型應用]：撐大點擊範圍，讓使用者更好點選 */
+            padding: 18px 30px;
+            
+            /* 【滑鼠懸停過渡設定】 */
+            transition: all 0.3s ease; /* 讓接下來的 hover 顏色變化過程花費 0.3 秒，顯得柔和 */
+        }
+
+        /* 【滑鼠懸停效果 :hover】 */
+        nav li a:hover {
+            background-color: #118f5c; /* 懸停時，背景顏色變深綠 */
+            letter-spacing: 1px;       /* 懸停時，字體稍微擴張，增加動態回饋 */
+        }
+
+        /* ==========================================================================
+           4. 主要內容區與網頁版面 (Main Layout)
+           ========================================================================== */
         main {
-            max-width: 900px; /* 限制網頁最大寬度，置中好看 */
-            margin: 30px auto;
+            /* [盒子模型應用]：設定最大寬度，在大螢幕上不會無限拉長 */
+            max-width: 1000px;
+            /* [盒子模型應用]：上下留出 40px 距離，左右 auto 代表自動置中 */
+            margin: 40px auto;
             padding: 0 20px;
         }
 
+        /* 大範疇區塊卡片化 */
         section {
-            background-color: #ffffff; /* 白色卡片背景 */
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 8px;        /* 圓角 */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* 微妙的陰影 */
+            background-color: #ffffff; /* 卡片白色底色 */
+            /* [盒子模型應用]：讓裡面的內容與卡片邊緣保持 35px 的完美距離 */
+            padding: 35px;
+            /* [盒子模型應用]：卡片與卡片之間保持 40px 的外邊距 */
+            margin-bottom: 40px;
+            
+            border-radius: 12px;       /* 優雅的圓角 */
+            box-shadow: 0 6px 18px rgba(0,0,0,0.03); /* 現代感微陰影 */
         }
 
         section h2 {
             color: #1e3d59;
-            border-bottom: 3px solid #17b978; /* 標題下方的裝飾線 */
-            padding-bottom: 10px;
             margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            /* [盒子模型應用]：利用底部邊框做出一條時尚的裝飾分隔線 */
+            border-bottom: 3px solid #17b978;
+            padding-bottom: 12px;
         }
 
-        /* 5. 文章卡片美化 */
+        /* 文章內容列表 */
+        .article-list {
+            /* 【彈性盒子 Flexbox 再次發威】 */
+            display: flex;
+            flex-direction: column;    /* 讓裡面的文章卡片直向排列 */
+            gap: 20px;                 /* 子元素（文章）之間的間距，不用辛苦調 margin 了 */
+        }
+
+        /* 文章卡片美化 */
         article {
             background-color: #f8f9fa;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 5px solid #ff6e40; /* 左側亮眼橘色邊框 */
+            /* [盒子模型應用]：文章內的內襯距 */
+            padding: 25px;
+            
+            /* [盒子模型應用]：左側加上一條橘色的粗邊框，凸顯視覺重點 */
+            border-left: 6px solid #ff6e40;
             border-radius: 4px;
+            
+            /* 【滑鼠懸停過渡設定】 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        /* 【滑鼠懸停效果 :hover】文章卡片微浮動 */
+        article:hover {
+            transform: translateY(-4px); /* 滑鼠移上去時，卡片往上飄移 4 像素 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 陰影加深，營造真的浮起來的立體感 */
+        }
+
         article h3 {
-            margin-top: 0;
-            color: #222;
+            margin: 0 0 12px 0;
+            color: #222222;
+            font-size: 1.3em;
         }
+
+        article p {
+            margin: 0 0 15px 0;
+            color: #666666;
+        }
+
+        /* 文章閱讀更多超連結 */
         article a {
             color: #ff6e40;
             text-decoration: none;
             font-weight: bold;
-        }
-        article a:hover {
-            text-decoration: underline;
+            display: inline-block;
+            transition: color 0.2s;
         }
 
-        /* 6. 頁尾美化 */
+        /* 【滑鼠懸停效果 :hover】 */
+        article a:hover {
+            color: #dd4b1a; /* 懸停時字體變更深的橘紅色 */
+            text-decoration: underline; /* 出現底線 */
+        }
+
+        /* ==========================================================================
+           5. 頁尾 (Footer)
+           ========================================================================== */
         footer {
             text-align: center;
-            padding: 20px;
             background-color: #1e3d59;
-            color: white;
+            color: #b3cde3;
             font-size: 0.9em;
+            /* [盒子模型應用]：控制上下內邊距 */
+            padding: 25px 20px;
+            margin-top: 60px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>全球探索</h1>
-        <p>歡迎來到我的綜合內容網站。</p>
+        <h1>全球探索誌</h1>
+        <p>掌握科技趨勢、走遍世界角落、品嚐在地美食</p>
     </header>
 
     <nav>
@@ -126,43 +202,49 @@
         <section id="tech">
             <h2>💻 科技焦點</h2>
             
-            <article>
-                <h3>【人工智慧】2026年 AI 如何改變我們的生活？</h3>
-                <p>探討最新一代人工智慧在工作、學習與創意產業上的實際應用與未來發展...</p>
-                <a href="#">閱讀更多...</a>
-            </article>
-            
-            <article>
-                <h3>【硬體開箱】最新款折疊螢幕手機評測</h3>
-                <p>今年各大廠商紛紛推出規格強悍的折疊手機，本文將帶來最詳細的效能與續航力測試...</p>
-                <a href="#">閱讀更多...</a>
-            </article>
+            <div class="article-list">
+                <article>
+                    <h3>【人工智慧】2026年 AI 如何改變我們的生活？</h3>
+                    <p>探討最新一代人工智慧在工作、學習與創意產業上的實際應用與未來發展。我們將深入解析自動化工作流與生成式技術如何協助人類提升三倍效能...</p>
+                    <a href="#">閱讀更多...</a>
+                </article>
+                
+                <article>
+                    <h3>【硬體開箱】最新款折疊螢幕手機評測</h3>
+                    <p>今年各大廠商紛紛推出規格強悍的折疊手機，本文將帶來最詳細的效能、螢幕摺痕與續航力測試，告訴你這款新機是否值得入手...</p>
+                    <a href="#">閱讀更多...</a>
+                </article>
+            </div>
         </section>
 
         <section id="travel">
             <h2>✈️ 旅遊足跡</h2>
             
-            <article>
-                <h3>【日本】京都深秋賞楓私房路線推薦</h3>
-                <p>避開觀光人潮，這五個在地人才知道的賞楓秘境，讓你體驗最寧靜的京都之美...</p>
-                <a href="#">閱讀更多...</a>
-            </article>
+            <div class="article-list">
+                <article>
+                    <h3>【日本】京都深秋賞楓私房路線推薦</h3>
+                    <p>避開觀光人潮，這五個在地人才知道的賞楓秘境，讓你體驗最寧靜的京都之美。包含交通接駁攻略以及清晨無人參拜的最佳時間點點大公開...</p>
+                    <a href="#">閱讀更多...</a>
+                </article>
+            </div>
         </section>
 
         <section id="food">
             <h2>🍕 美食饗宴</h2>
             
-            <article>
-                <h3>【台北】捷運中山站必吃拉麵地圖</h3>
-                <p>嚴選 5 間豚骨、雞白湯與沾麵名店，拉麵愛好者絕對不能錯過的排隊指南...</p>
-                <a href="#">閱讀更多...</a>
-            </article>
+            <div class="article-list">
+                <article>
+                    <h3>【台北】捷運中山站必吃拉麵地圖</h3>
+                    <p>嚴選 5 間豚骨、雞白湯與沾麵名店，拉麵愛好者絕對不能錯過的排隊指南！我們從湯頭濃郁度、麵條Ｑ度以及叉燒厚度為你做最全面的評分...</p>
+                    <a href="#">閱讀更多...</a>
+                </article>
+            </div>
         </section>
 
     </main>
 
     <footer>
-        <p>©全球探索. 保留所有權利|by lslkenneth 2001-2026。</p>
+        <p>© 2026 全球探索誌. 保留所有權利。</p>
     </footer>
 
 </body>
