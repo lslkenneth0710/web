@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kenneth LENG 的旅遊相關鏈接頁面，包含日本九州、中國桂林與泰國布吉的旅遊資訊。">
+    <title>旅遊足跡 - 相關鏈接</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kyushu: '#E63946', // 紅色
+                        guilin: '#457B9D', // 藍色
+                        phuket: '#009688', // 藍綠色 (Teal) - 新增
+                        light: '#F8FAFC', 
+                        dark: '#1D3557',
+                        slate: '#64748B'
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-hover {
+                @apply transition-all duration-300 ease-out;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+            }
+            /* 圖片加載過渡 */
+            img {
+                transition: opacity 0.5s ease-in-out, transform 0.7s ease;
+            }
+            img.loading {
+                opacity: 0;
+            }
+            img.loaded {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark font-sans antialiased min-h-screen flex flex-col">
+
+    <div class="container mx-auto px-4 py-12 max-w-7xl flex-grow"> <header class="text-center mb-16 space-y-2">
+            <div class="inline-block p-2 px-4 rounded-full bg-slate-100 text-slate-600 text-sm font-semibold tracking-wide mb-2">
+                TRAVEL LOGS
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-kyushu via-guilin to-phuket text-transparent bg-clip-text pb-2">
+                旅遊探索與記錄
+            </h1>
+            <p class="text-slate text-lg">記錄世界的美好，分享旅途的感動</p>
+        </header>
+
+        <main class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://static.lifetour.info/eWeb_lifetour/IMGDB/003462/003520/003528/003547/003555/00113565.WEBP" 
+                         alt="日本九州風景" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-kyushu font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 日本 · 九州
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-kyushu transition-colors">
+                        九州環島之旅
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        九州是日本四大島之一，擁有豐富的自然景觀。從別府的溫泉地獄到阿蘇山的壯闊火山口，這裡充滿了獨特的文化遺產與美食。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Kyushu" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-red-50 text-kyushu rounded-xl hover:bg-kyushu hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Aug)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://blog.travel4u.com.tw/wp-content/uploads/2020/04/%E4%B8%AD%E5%9C%8B_%E5%BB%A3%E8%A5%BF_%E6%A1%82%E6%9E%97_%E9%99%BD%E6%9C%94-1-1.jpg" 
+                         alt="中國桂林" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-guilin font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 中國 · 桂林
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-guilin transition-colors">
+                        桂林山水甲天下
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        位於廣西壯族自治區，以獨特的喀斯特地貌聞名於世。乘船遊覽灕江，彷彿置身於一幅延綿不斷的水墨畫卷之中。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Guilin" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-blue-50 text-guilin rounded-xl hover:bg-guilin hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://hips.hearstapps.com/hmg-prod/images/elm020118fobjetsetter-007-1519678236.jpg" 
+                         alt="泰國布吉島" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-phuket font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 泰國 · 布吉
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-phuket transition-colors">
+                        安達曼海的珍珠
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        探索斯米蘭群島的果凍海與攀牙灣的奇岩異石。在神仙半島欣賞絕美日落，體驗熱帶島嶼的陽光、海灘與美食盛宴。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Phuket" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-teal-50 text-phuket rounded-xl hover:bg-phuket hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://hips.hearstapps.com/hmg-prod/images/elm020118fobjetsetter-007-1519678236.jpg" 
+                         alt="泰國曼谷" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-phuket font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 泰國 · 曼谷
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-phuket transition-colors">
+                        北碧 , 芭達雅
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        探索斯米蘭群島的果凍海與攀牙灣的奇岩異石。在神仙半島欣賞絕美日落，體驗熱帶島嶼的陽光、海灘與美食盛宴。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Phuket" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-teal-50 text-phuket rounded-xl hover:bg-phuket hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2026 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+			
+			      <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://m.bijingdi.com/uploadfile/2023/0524/20230524232851885.jpg" 
+                         alt="中國西安" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-guilin font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 中國 · 西安
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-guilin transition-colors">
+                        秦始皇陵博物院
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        被譽為世界四大古都，中華文明的發祥地和絲綢之路的起點，擁有極其深厚的歷史文化底蘊。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-teal-50 text-guilin rounded-xl hover:bg-guilin hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            
+            <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://pic3.sucaisucai.com/14/72/14172683_2.jpg" 
+                         alt="中國韶關" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-guilin font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 中國 · 韶關
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-guilin transition-colors">
+                        丹霞山·紅石公園
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        丹霞山是世界級的地質公園，以「色若渥丹，燦如明霞」而著稱，是丹霞地形的典型代表。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Shaoguan" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-blue-50 text-guilin rounded-xl hover:bg-guilin hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+			
+		    <article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/20230206_Guangji_Bridge_02.jpg/1280px-20230206_Guangji_Bridge_02.jpg" 
+                         alt="中國潮汕" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-guilin font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 中國 · 潮汕
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-guilin transition-colors">
+                        廣濟橋·中國四大古橋之一
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        潮汕是一個擁有深厚歷史底蘊和獨特文化的地區，其地理、人緣、文化和經濟都緊密相連。有潮汕牛肉火鍋、滷味等。 
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Chaoshan" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-blue-50 text-guilin rounded-xl hover:bg-guilin hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article><article class="group bg-white rounded-2xl overflow-hidden shadow-lg card-hover border border-gray-100 flex flex-col h-full">
+                <div class="h-64 overflow-hidden relative bg-gray-200">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Tianmen_38330-Zhangjiajie_%2849047525877%29.jpg/1280px-Tianmen_38330-Zhangjiajie_%2849047525877%29.jpg" 
+                         alt="中國張家界" 
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         class="loading w-full h-full object-cover group-hover:scale-110">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-lg text-guilin font-bold text-sm shadow-sm">
+                        <i class="ri-map-pin-line align-middle"></i> 中國 · 張家界
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-guilin transition-colors">
+                        天門山·普光禪寺
+                    </h2>
+                    
+                    <p class="text-slate mb-6 leading-relaxed flex-grow">
+                        張家界是著名的旅遊城市，素有「奇峰三千，秀水八百」的美譽，武陵源砂岩峰林地貌景觀為世所罕見。
+                    </p>
+                    
+                    <div class="pt-6 border-t border-gray-100">
+                        <a href="https://lslkenneth.neocities.org/Zhangjiajie" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="inline-flex items-center justify-between w-full px-4 py-3 bg-blue-50 text-guilin rounded-xl hover:bg-guilin hover:text-white transition-all font-medium group/btn">
+                            <span>瀏覽遊記 (2025 Dec)</span>
+                            <i class="ri-arrow-right-line group-hover/btn:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <footer class="mt-20 py-8 text-center border-t border-gray-200">
+            <p class="text-slate text-sm font-medium">
+                © 2023-2025 Kenneth LENG. All rights reserved.
+            </p>
+            <p class="text-xs text-gray-400 mt-2">V1.0.3 Updated</p>
+			<p class="text-xs text-gray-50 mt-2">AI Generator : 編寫一個完整的HTML,日期為2025年12月22日至2025年12月29日香港到中國西安旅遊行程(2位成人,一位10歲小孩、一位8歲小孩), 
+去程12月22日坐飛機香港22:30到布吉01:30,回程12月29日坐飛機布吉02:30到香港07:00,
+參考價格為HKD預算每位成人5000，每位小孩2500。每地點需要詳細說明及每天的詳細行程(每天活動時間為08:00-22:30)。
+行程包括景點、交通（距離、時間、費用）、每日住宿推薦至小六間（與國各景點的距離、價錢、家庭房、連通房或寬敞套房）、
+早餐至小十個（酒店、推介）、晚餐至小十個（酒店、推介）、午餐至小十個（酒店、推介）、美食介紹至小二十個、網紅打卡點至小十個、至小五個國家公園。
+請以香港繁體中文回答</p>
+        </footer>
+    </div>
+
+</body>
+</html>
