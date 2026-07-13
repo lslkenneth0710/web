@@ -38,7 +38,7 @@
         }
 
         .container {
-            max-width: 1400px; /* 優化最大寬度，避免在大螢幕上過度拉伸 */
+            max-width: 1400px; /* 優化最大寬度 */
             margin: 0 auto;
             background: var(--card-bg);
             padding: 30px 20px;
@@ -117,6 +117,7 @@
             border-collapse: collapse;
             min-width: 800px;
             background: white;
+            table-layout: fixed; /* 固定佈局，防止內容撐開寬度 */
         }
 
         th, td {
@@ -125,6 +126,8 @@
             font-size: 0.92rem;
             border-bottom: 1px solid #edf2f7;
             vertical-align: top; /* 頂端對齊讓版面更乾淨 */
+            word-wrap: break-word; /* 允許長文字自動換行 */
+            word-break: break-word;
         }
 
         th {
@@ -146,29 +149,33 @@
         }
 
         /* ====================================================
-           【全新優化】媒體查詢分流：電腦版固定尺寸 + 完美特效
+           桌面端（電腦）固定尺寸 + 完美特效
            ==================================================== */
         @media (min-width: 769px) {
+            /* 電腦端各欄位比例 */
+            table th:nth-child(1), table td:nth-child(1) { width: 22%; }
+            table th:nth-child(2), table td:nth-child(2) { width: 43%; }
+            table th:nth-child(3), table td:nth-child(3) { width: 35%; }
+
             .table-wrapper table img, 
             .hotel-card img, 
             .img-box {
-                width: 220px !important;    /* 強制鎖定寬度 */
-                height: 146.6px !important;   /* 強制鎖定高度 */
-                object-fit: cover !important; /* 完美裁切比例，圖片絕對不變形 */
-                object-position: center !important; /* 裁切時以圖片中心為主 */
-                border-radius: 8px !important; /* 微圓角 */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important; /* 輕微陰影 */
+                width: 220px !important;    
+                height: 146.6px !important;   
+                object-fit: cover !important; 
+                object-position: center !important; 
+                border-radius: 8px !important; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important; 
                 display: block !important;
                 margin-top: 8px !important;
                 margin-bottom: 4px !important;
                 transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
             }
 
-            /* 滑鼠移到圖片上時的精緻放大效果（僅限電腦端） */
             .table-wrapper table img:hover, 
             .hotel-card img:hover, 
             .img-box:hover {
-                transform: translateY(-20px) scale(1.50) !important; /* 往上漂移 20px，放大 50% */
+                transform: translateY(-20px) scale(1.50) !important; 
                 box-shadow: 0 24px 90px rgba(0, 0, 0, 0.50) !important; 
                 position: relative;
                 z-index: 10;
@@ -215,34 +222,6 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* 飯店卡片現代化 */
-        .hotel-card {
-            padding: 20px;
-            text-align: center;
-            background-color: #ffffff;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: var(--transition);
-        }
-
-        .hotel-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-        }
-
-        .map-link {
-            display: block;
-            color: #1a73e8;
-            font-weight: 600;
-            text-decoration: none;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-        }
-
-        .map-link:hover {
-            text-decoration: underline;
-        }
-
         footer {
             text-align: center;
             font-size: 0.85rem;
@@ -254,96 +233,71 @@
         }
 
         /* ====================================================
-           【全新優化】iPhone & 手機端極致體驗優化
+           【核心修復】iPhone & 手機端：保留橫向並排表格格式
            ==================================================== */
         @media (max-width: 768px) {
             .food-grid { grid-template-columns: 1fr; }
             h1 { font-size: 1.6rem; }
             h2 { font-size: 1.2rem; margin-top: 25px; }
             h3 { font-size: 1.1rem; margin-top: 20px; }
-            .container { padding: 15px 10px; border-radius: 0; box-shadow: none; }
+            .container { padding: 10px 8px; border-radius: 0; box-shadow: none; width: 100% !important; max-width: 100% !important; }
             .highlight-box { padding: 15px; font-size: 0.9rem; }
 
-            /* 針對手機端的超連結按鈕加大觸控範圍，避免誤觸 */
-            a { padding: 2px 0; display: inline-block; }
-            .highlight-box a { text-decoration: underline; font-weight: bold; }
-
-            /* 將原本不便於手機瀏覽的表格，重組為適合直向滑動的「卡片流」 */
+            /* 確保表格在手機上不被截斷、不凸出，維持 100% 寬度並排 */
             .table-wrapper {
-                border: none;
-                box-shadow: none;
-                overflow-x: visible;
-                margin-bottom: 20px;
-            }
-            
-            table, thead, tbody, th, td, tr { 
-                display: block; 
-            }
-            
-            /* 隱藏手機端不需要的表頭 */
-            thead tr { 
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            
-            tr {
-                background: #ffffff !important;
-                border: 1px solid #e2e8f0;
-                border-radius: 8px;
+                overflow-x: hidden !important; /* 徹底解決左右晃動凸出問題 */
+                width: 100% !important;
                 margin-bottom: 15px;
-                padding: 12px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.02);
             }
             
-            td {
-                border: none;
-                padding: 6px 0;
-                position: relative;
-                font-size: 0.95rem;
-                text-align: left !important; /* 強制內容靠左 */
+            table { 
+                display: table !important; 
+                width: 100% !important;
+                min-width: 100% !important; /* 不再使用 800px 限制 */
+                table-layout: fixed !important;
             }
+            
+            thead { display: table-header-group !important; }
+            tbody { display: table-row-group !important; }
+            tr { display: table-row !important; width: 100% !important; background: #ffffff !important; }
+            th, td { display: table-cell !important; padding: 10px 6px !important; font-size: 0.85rem !important; }
 
-            /* 為主要時間或名稱加上醒目樣式 */
-            td:first-child {
-                font-weight: 700;
-                color: var(--primary-color);
-                border-bottom: 1px dashed #e2e8f0;
-                padding-bottom: 6px;
-                margin-bottom: 6px;
-                font-size: 1rem;
-            }
-            
-            /* 【修改】手機版圖片調整：全部靠左對齊，不再置中或偏右 */
+            /* 手機端精準調配 3 個欄位的橫向寬度比例，字字對齊不漏掉 */
+            table th:nth-child(1), table td:nth-child(1) { width: 22% !important; font-weight: bold; color: var(--primary-color); }
+            table th:nth-child(2), table td:nth-child(2) { width: 45% !important; }
+            table th:nth-child(3), table td:td-child(3) { width: 33% !important; }
+
+            /* 手機版圖片尺寸優化：完美縮小並貼在活動欄左側，絕對不干擾右側欄位 */
             .table-wrapper table img, 
             .hotel-card img, 
             .img-box {
-                width: 180px !important;       /* 精簡寬度至 180px */
-                height: 120px !important;      /* 固定高度維持 3:2 比例 */
-                object-fit: cover !important;  /* 裁切不變形 */
-                border-radius: 6px !important;
-                margin: 8px 0 !important;      /* 修改：上方留白，左右不置中（靠左） */
+                width: 100% !important;        /* 自動適應 45% 的欄位寬度 */
+                max-width: 110px !important;   /* 最大寬度鎖定在 110px，小巧精緻 */
+                height: auto !important;       /* 高度等比例縮放 */
+                aspect-ratio: 4 / 3 !important;
+                object-fit: cover !important;  
+                border-radius: 4px !important;
+                margin: 6px 0 !important;      /* 靠左留白 */
                 display: block !important;
-                float: none !important;        /* 防止任何浮動干擾 */
+                float: none !important;
             }
 
-            /* 返回頂部按鈕優化：做成精緻的右下角懸浮圓鈕，不擋字 */
+            /* 返回頂部按鈕 */
             .back-to-top {
                 position: fixed !important;
                 bottom: calc(20px + env(safe-area-inset-bottom)) !important;
-                right: 20px !important;
-                width: 44px !important;
-                height: 44px !important;
-                line-height: 44px !important;
+                right: 15px !important;
+                width: 40px !important;
+                height: 40px !important;
+                line-height: 40px !important;
                 background: rgba(0, 121, 107, 0.9) !important;
                 color: white !important;
                 text-align: center !important;
                 border-radius: 50% !important;
                 box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-                font-size: 0.75rem !important;
+                font-size: 0.7rem !important;
                 font-weight: bold !important;
                 z-index: 999;
-                padding: 0 !important;
             }
         }
 		
@@ -361,7 +315,7 @@
         <strong>$💵฿ 兌泰銖：Superrich Thailand </strong><a href="https://maps.app.goo.gl/mFPwWGHAgn13CD3XA" target="_blank">@CENTRAL LADPRAO(map)</a> , <a href="https://www.superrichthailand.com/#!/en/exchange#rate-section" target="_blank">匯率網頁(比較高)</a><br>
         <strong>$💵฿ 兌泰銖：SuperRich Exchange </strong><a href="https://maps.app.goo.gl/Hjd3Z73oTgvtoY93A" target="_blank">@MRT Chatuchak(map)</a> , <a href="https://www.superrich1965.com/cn/exchange-rate" target="_blank">匯率網頁(比較低)</a><br>
         <strong>$💵฿ 兌泰銖：香港 </strong><a href="https://hk.ttrate.com/zh_hk/?c=THB&b=0&s=1&t=2&sort=note_sell&order=1&f=1" target="_blank">港元兌泰國銖</a><br>
-        <strong>📱📞 Data SIM 實體：</strong> <a href="https://datasimhk.com/ture-dtac%E6%B3%B0%E5%9C%8B10%E6%97%A55g-%E5%85%A8%E7%84%A1%E9%99%90%E4%B8%8D%E9%99%8D%E9%80%9F%E3%80%8A%E8%B3%BC%E8%B2%B72%E5%BC%B5%E5%85%8D%E8%B2%BB%E9%A0%86%E8%B1%9A%E3%80%8B%E7%84%A1%E9%99%90%E4%B8%8A%E7%B6%B2%E5%8D%A1%E6%5%B5%E6%93%A1%E5%8D%A1sim%E5%8D%A1%E9%9B%BB%E8%A9%B1%E5%99%B0data" target="_blank">Truemove 泰國10日5G全無限不降速</a><br>
+        <strong>📱📞 Data SIM 實體：</strong> <a href="https://datasimhk.com/ture-dtac%E6%B3%B0%E5%9C%8B10%E6%97%A55g-%E5%85%A8%E7%84%A1%E9%99%90%E4%B8%8D%E9%99%8D%E9%80%9F%E3%80%8A%E8%B3%BC%E8%B2%B72%E5%BC%B5%E5%85%8D%E8%B2%BB%E9%A0%86%E8%B1%9A%E3%80%8B%E7%84%A1%E9%99%90%E4%B8%8A%E7%B6%B2%E5%8D%A1%E6%95%B8%E6%93%A1%E5%8D%A1sim%E5%8D%A1%E9%9B%BB%E8%A9%B1%E5%99%B0data" target="_blank">Truemove 泰國10日5G全無限不降速</a><br>
         <strong>📱📞 Data eSIM：</strong> <a href="https://www.kkday.com/zh-hk/product/136927-esim-thailand-dtac-5g-7-10-days-unlimited-data?srsltid=AfmBOopaK2vDEmEE1gHesVeFNOIFqmTGNyAwshjF5aSPTsC5A8fqqTv9" target="_blank">KKday 無限流量eSIM(無hotspot)</a><br>
         <strong>📱📞 Data eSIM：</strong> <a href="https://esim.djbcard.com/product/esim-smt-unlimited/" target="_blank">DJB eSIM 無限流量eSIM(hotspot)</a><br>
         <strong>📌 駕照：</strong> 準備好國際駕照 & 香港車牌<br>
@@ -390,8 +344,7 @@
 
     <h2>📑 主行程 🗺️</h2>
 
-    <!-- Day 01 -->
-	<div id="day01" class="day-section">
+    <div id="day01" class="day-section">
         <h3>08月01日 (Day 01)星期六 - 到達曼谷</h3>
         <div class="table-wrapper">
             <table>
@@ -418,8 +371,7 @@
         </div>
     </div>
 
-    <!-- Day 02 -->
-	<div id="day02" class="day-section">
+    <div id="day02" class="day-section">
         <h3>08月02日 (Day 02)星期日 - JJ Market</h3>
         <div class="table-wrapper">
             <table>
@@ -439,7 +391,7 @@
                             <a href="http://xhslink.com/m/6Ga5iGOvUq7" target="_blank">- 港青旅国际旅行社@小紅書</a><br>
                             <a href="https://hk.trip.com/?locale=zh-HK&curr=HKD" target="_blank">- Trip.com(27/7前有88折)</a>
                         </td>
-                    </tr> <!-- 修正：原本這裡漏掉了結束標籤 -->
+                    </tr>
                     <tr>
                         <td>01:35<br>左右到達酒店</td>
                         <td>Check-in🔑 及休息🛌💤</td>
@@ -493,8 +445,7 @@
         </div>
     </div>
 
-    <!-- Day 03 -->
-	<div id="day03" class="day-section">
+    <div id="day03" class="day-section">
         <h3>08月03日 (Day 03)星期一 - 北碧</h3>
         <div class="table-wrapper">
             <table>
@@ -571,8 +522,7 @@
         </div>
     </div>
 
-    <!-- Day 04 -->
-	<div id="day04" class="day-section">
+    <div id="day04" class="day-section">
         <h3>08月04日 (Day 04)星期二 - Erawan Waterfall & Safari Park Kanchanaburi</h3>
         <div class="table-wrapper">
             <table>
@@ -643,8 +593,7 @@
         </div>
     </div>
 
-    <!-- Day 05 -->
-	<div id="day05" class="day-section">
+    <div id="day05" class="day-section">
         <h3>08月05日 (Day 05)星期三 - Meena Café & 出發芭達雅</h3>
         <div class="table-wrapper">
             <table>
@@ -703,8 +652,7 @@
         </div>
     </div>
 
-    <!-- Day 06 -->
-	<div id="day06" class="day-section">
+    <div id="day06" class="day-section">
         <h3>08月06日 (Day 06)星期四 - 入住Villa</h3>
         <div class="table-wrapper">
             <table>
@@ -744,8 +692,7 @@
         </div>
     </div>
 
-    <!-- Day 07 -->
-	<div id="day07" class="day-section">
+    <div id="day07" class="day-section">
         <h3>08月07日 (Day 07)星期五 - 莎邁珊島</h3>
         <div class="table-wrapper">
             <table>
@@ -796,8 +743,7 @@
         </div>
     </div>
 
-    <!-- Day 08 -->
-	<div id="day08" class="day-section">
+    <div id="day08" class="day-section">
         <h3>08月08日 (Day 08)星期六 - 代定</h3>
         <div class="table-wrapper">
             <table>
@@ -824,8 +770,7 @@
         </div>
     </div>
 
-    <!-- Day 09 -->
-	<div id="day09" class="day-section">
+    <div id="day09" class="day-section">
         <h3>08月09日 (Day 09)星期日 - 入住水上樂園酒店</h3>
         <div class="table-wrapper">
             <table>
@@ -857,8 +802,7 @@
         </div>
     </div>
 
-    <!-- Day 10 -->
-	<div id="day10" class="day-section">
+    <div id="day10" class="day-section">
         <h3>08月10日 (Day 10)星期一 - 代定</h3>
         <div class="table-wrapper">
             <table>
@@ -885,8 +829,7 @@
         </div>
     </div>
 
-    <!-- Day 11 -->
-	<div id="day11" class="day-section">
+    <div id="day11" class="day-section">
         <h3>08月11日 (Day 11)星期二 - 返香港</h3>
         <div class="table-wrapper">
             <table>
@@ -933,29 +876,29 @@
                     </td>
                     <td>
                         <strong>招牌菜：===============></strong><br>
-                        1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">原始燒烤魚 (Genshiyaki Fish)</strong>：魚肉懸掛在炭火旁緩慢烤熟，外皮酥脆，內裡保留了極高的肉汁與油脂。<br>
-                        2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">爆量鮭魚卵飯 (Kobore Ikura Don)</strong>：店員會邊喊口號邊在你的碗裡不停堆疊鮭魚卵，直到滿溢出來，視覺與味覺效果滿分。<br>
-                        3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">特大海鮮拼盤 / 巨大炸蠔 (Bomb Fried Oysters)</strong>：這裡的炸蠔體型驚人，內含多顆生蠔肉，外層酥脆，是老饕最愛。<br>
-                        4. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">海膽布丁 (Uni Pudding)</strong>：鹹甜交織的口感，海膽的鮮味融入綿密的布丁中，每日限量供應。<br>
+                        1. 原始燒烤魚 (Genshiyaki Fish)：魚肉懸掛在炭火旁緩慢烤熟，外皮酥脆，內裡保留了極高的肉汁與油脂。<br>
+                        2. 爆量鮭魚卵飯 (Kobore Ikura Don)：店員會邊喊口號邊在你的碗裡不停堆疊鮭魚卵，直到滿溢出來，視覺與味覺效果滿分。<br>
+                        3. 特大海鮮拼盤 / 巨大炸蠔 (Bomb Fried Oysters)：這裡的炸蠔體型驚人，內含多顆生蠔肉，外層酥脆，是老饕最愛。<br>
+                        4. 海膽布丁 (Uni Pudding)：鹹甜交織的口感，海膽的鮮味融入綿密的布丁中，每日限量供應。<br>
 						<br>
 						<strong>主食：===============></strong><br>
-                        1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">火山鮭魚丼 (Volcano Salmon Rice Bowl)</strong>：鋪滿新鮮鮭魚片並蓋上鮭魚卵，是店內熱門的打卡美食。<br>
-                        2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">起司帕馬森義大利麵 (Grana Padano Pasta)</strong>：在巨大的帕馬森起司輪中現場拌製，通常會搭配鮭魚、鮭魚卵或海膽，口感極其濃郁。<br>
-                        3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">和牛涮涮鍋或燒肉 (Wagyu Shabu Shabu/Steak)</strong>：採用北海道 Furano 和牛，油花分布均勻，入口即化。<br>
+                        1. 火山鮭魚丼 (Volcano Salmon Rice Bowl)：鋪滿新鮮鮭魚片並蓋上鮭魚卵，是店內熱門的打卡美食。<br>
+                        2. 起司帕馬森義大利麵 (Grana Padano Pasta)：在巨大的帕馬森起司輪中現場拌製，通常會搭配鮭魚、鮭魚卵或海膽，口感極其濃郁。<br>
+                        3. 和牛涮涮鍋或燒肉 (Wagyu Shabu Shabu/Steak)：採用北海道 Furano 和牛，油花分布均勻，入口即化。<br>
 						<br>
 						<strong>小食：===============></strong><br>
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">蟹膏甲羅燒 (Zuwai Kora Yaki)</strong>：松葉蟹膏盛在蟹殼中炭火加熱，味道非常濃郁，適合配酒。<br>
-                        2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">厚岸生蠔 (Akkeshi Oysters)</strong>：產地直送，口感滑順且帶有獨特的甜味。<br>
-                        3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">炭烤串燒 (Kushiyaki)</strong>：雞肉或豬肉串，經過木炭燻烤帶有獨特香氣。<br>
+						1. 蟹膏甲羅燒 (Zuwai Kora Yaki)：松葉蟹膏盛在蟹殼中炭火加熱，味道非常濃郁，適合配酒。<br>
+                        2. 厚岸生蠔 (Akkeshi Oysters)：產地直送，口感滑順且帶有獨特的甜味。<br>
+                        3. 炭烤串燒 (Kushiyaki)：雞肉或豬肉串，經過木炭燻烤帶有獨特香氣。<br>
 						<br>
 						<strong>甜點：===============></strong><br>
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">北海道牛奶冰淇淋</strong>：採用北海道優質牛乳製作，奶香濃郁且不膩口。<br>
-                        2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">日式蕨餅 (Warabi Mochi)</strong>：口感Q彈，裹上黃豆粉與黑糖漿。<br>
+						1. 北海道牛奶冰淇淋：採用北海道優質牛乳製作，奶香濃郁且不膩口。<br>
+                        2. 日式蕨餅 (Warabi Mochi)：口感Q彈，裹上黃豆粉與黑糖漿。<br>
 						<br>
 						<strong>飲品：===============></strong><br>
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">Highball</strong>：典型的日式居酒屋搭配，清爽解膩。<br>
-                        2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">生啤酒</strong>：搭配原始燒魚的最佳選擇。<br>
-                        3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">清酒 (Sake)</strong>：備有豐富的日本清酒選擇，可請店員根據當天的魚鮮推薦合適的款式。<br>
+						1. Highball：典型的日式居酒屋搭配，清爽解膩。<br>
+                        2. 生啤酒：搭配原始燒魚的最佳選擇。<br>
+                        3. 清酒 (Sake)：備有豐富的日本清酒選擇，可請店員根據當天的魚鮮推薦合適的款式。<br>
                     </td>
                     <td>11:00–15:00 六,日至16:00<br>
 					17:00–23:00<br><br>
@@ -983,35 +926,35 @@
             <tbody>
                 <tr>
                     <td>
-						<a href="https://maps.app.goo.gl/15459EGXqujADmPJ7" target="_blank"> 👉 推薦 👍👍🔥🔥 <br>Keereetara Riverside</a><br>建築設計充滿熱帶現代風<br>
+						<a href="https://maps.app.goo.gl/15459EGXqujADmPJ7" target="_blank"> 👉 推薦 👍 👍 🔥 🔥 <br>Keereetara Riverside</a><br>建築設計充滿熱帶現代風<br>
 						<a href="https://www.viviyu.com/archives/57006" target="_blank">Blog介紹</a><br>
 						<img src="https://live.staticflickr.com/65535/54022760470_0eb7c2c772_b.jpg" alt="Keereetara Riverside">
 					</td>
 					<td>
 						<strong>招牌菜：===============></strong><br>
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式紅咖哩魚 (Choo Chee Pla Kang)</strong>：使用桂河特產的大鱗魮魚，肉質Q彈，配上濃郁椰奶紅咖哩。<br>
-						2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式辣醬配燙青菜 (Nam Phrik Thara)</strong>：餐廳的冠名招牌，辣醬味道非常有層次。<br>
-						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">羅望子醬酥炸魚 (Pla Chon Keeree)</strong>：炸得外酥內嫩的魚肉淋上酸甜香草羅望子醬。<br>
+						1. 泰式紅咖哩魚 (Choo Chee Pla Kang)：使用桂河特產的大鱗魮魚，肉質Q彈，配上濃郁椰奶紅咖哩。<br>
+						2. 泰式辣醬配燙青菜 (Nam Phrik Thara)：餐廳的冠名招牌，辣醬味道非常有層次。<br>
+						3. 羅望子醬酥炸魚 (Pla Chon Keeree)：炸得外酥內嫩的魚肉淋上酸甜香草羅望子醬。<br>
 						<br>
 						<strong>主食：===============></strong><br>	
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">菠蘿肉鬆蟹肉炒飯</strong>：賣相華麗，用半顆菠蘿盛裝，份量十足，適合全家分享。<br>
-						2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">羅勒葉炒脆皮豬肉打拋飯</strong>：泰國經典口味，脆皮豬肉口感極佳。<br>
-						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式大蝦炒金邊粉</strong>：經典的地道風味，大蝦新鮮且火候十足。<br>
+						1. 菠蘿肉鬆蟹肉炒飯：賣相華麗，用半顆菠蘿盛裝，份量十足，適合全家分享。<br>
+						2. 羅勒葉炒脆皮豬肉打拋飯：泰國經典口味，脆皮豬肉口感極佳。<br>
+						3. 泰式大蝦炒金邊粉：經典的地道風味，大蝦新鮮且火候十足。<br>
 						<br>
 						<strong>小食：===============></strong><br>	
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式魚餅 (Tod Mun Pla)</strong>：口感紮實，帶有濃源的檸檬葉與香料香氣。<br>
-						2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">炭烤豬頸肉 (Grilled Pork Neck)</strong>：肥瘦均勻，烤至微焦香，沾上秘製酸辣醬汁。<br>
-						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">沙嗲雞肉串 (Chicken Satay)</strong>：醃漬入味，配上香甜的花生蘸醬，是大人小孩都愛的小食。<br>
+						1. 泰式魚餅 (Tod Mun Pla)：口感紮實，帶有濃源的檸檬葉與香料香氣。<br>
+						2. 炭烤豬頸肉 (Grilled Pork Neck)：肥瘦均勻，烤至微焦香，沾上秘製酸辣醬汁。<br>
+						3. 沙嗲雞肉串 (Chicken Satay)：醃漬入味，配上香甜的花生蘸醬，是大人小孩都愛的小食。<br>
 						<br>
 						<strong>甜點：===============></strong><br>	
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">芒果糯米飯 (Mango Sticky Rice)</strong>：必點的經典泰式甜點，糯米飯淋上溫熱椰漿。<br>
-						2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式紅寶石 (Tab Tim Krob)</strong>：脆口荸薺搭配冰涼椰奶，口感爽脆消暑。<br>
-						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">椰子雪糕 (Coconut Ice Cream)</strong>：裝在椰子殼內，清甜不膩，還能吃到椰肉。<br>
+						1. 芒果糯米飯 (Mango Sticky Rice)：必點的經典泰式甜點，糯米飯淋上溫熱椰漿。<br>
+						2. 泰式紅寶石 (Tab Tim Krob)：脆口荸薺搭配冰涼椰奶，口感爽脆消暑。<br>
+						3. 椰子雪糕 (Coconut Ice Cream)：裝在椰子殼內，清甜不膩，還能吃到椰肉。<br>
 						<br>
 						<strong>飲品：===============></strong><br>	
-						1. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">蝶豆花檸檬水 (Butterfly Pea Lemonade)</strong>：顏色夢幻，拍照打卡效果非常好。<br>
-						2. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">泰式冰奶茶 (Thai Milk Tea)</strong>：正宗厚重的茶香與煉奶組合。<br>
-						3. <strong style="color: #ff4500; font-weight: bold; background-color: #fff3cd; padding: 2px 4px; border-radius: 4px;">新鮮椰青 (Fresh Coconut)</strong>：100% 天然原汁原味，最適合配搭重口味的泰菜。<br>
+						1. 蝶豆花檸檬水 (Butterfly Pea Lemonade)：顏色夢幻，拍照打卡效果非常好。<br>
+						2. 泰式冰奶茶 (Thai Milk Tea)：正宗厚重的茶香與煉奶組合。<br>
+						3. 新鮮椰青 (Fresh Coconut)：100% 天然原汁原味，最適合配搭重口味的泰菜。<br>
                     </td>
                     <td>10:00 - 22:00</td>
 					<td>僅接受 18:00 前 的訂位<br><a href="https://www.facebook.com/keereeTaraRiverside/" target="_blank">提前預訂河畔位</a></td>
@@ -1204,17 +1147,15 @@
                 <span>2026-07-13</span>
             </div>
             <p class="text-xs text-gray-500">
-                &copy; 2026 Kenneth.L | Designed for Travel
+                © 2026 Kenneth.L | Designed for Travel
             </p>
         </div>
     </footer>
 	
 </div>
 
-<!-- 返回頂部按鈕 -->
 <a href="#top" class="back-to-top">TOP</a>
 
-<!-- JavaScript -->
 <script>
     // 平滑滾動
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
