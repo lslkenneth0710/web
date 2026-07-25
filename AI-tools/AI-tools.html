@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 人工智能工具箱 | 實用 AI 軟件與工具指南</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-hover: #0284c7;
+            --border-color: #334155;
+            --tag-bg: rgba(56, 189, 248, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header .subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        header p {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        article {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        article:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-image {
+            position: relative;
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        article:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            color: var(--accent-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-content h2 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .card-content p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-action a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 16px;
+            background-color: var(--accent-color);
+            color: #0f172a;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .card-action a:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.85rem;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        footer .prompt-info {
+            max-width: 800px;
+            margin: 15px auto 0;
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: left;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="subtitle">AI TOOLS DIRECTORY</div>
+            <h1>人工智能工具精選集</h1>
+            <p>探索最新、最實用的 AI 軟件與工具，提升工作與創作效率</p>
+        </header>
+
+        <main>
+            <!-- 工具 1: ChatGPT -->
+            <article>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?q=80&w=800&auto=format&fit=crop" alt="ChatGPT" loading="lazy">
+                    <div class="card-tag">大型語言模型 · LLM</div>
+                </div>
+                <div class="card-content">
+                    <h2>ChatGPT (OpenAI)</h2>
+                    <p>全球最受歡迎的多功能 AI 助手，支援自然對話、寫作、程式碼撰寫、數據分析及圖像生成（DALL-E 3），適合日常與專業工作應用。</p>
+                    <div class="card-action">
+                        <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer">
+                            <span>使用工具 (GPT-4o)</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 工具 2: Midjourney -->
+            <article>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="Midjourney" loading="lazy">
+                    <div class="card-tag">圖像生成 · AI Art</div>
+                </div>
+                <div class="card-content">
+                    <h2>Midjourney</h2>
+                    <p>頂級 AI 繪圖與藝術生成工具，能根據文字提示詞（Prompt）生成極具藝術感、寫實度與高畫質的圖像，廣泛應用於設計與概念創作。</p>
+                    <div class="card-action">
+                        <a href="https://www.midjourney.com" target="_blank" rel="noopener noreferrer">
+                            <span>使用工具 (v6.0)</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 工具 3: Claude -->
+            <article>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1680792563719-288027b2a090?q=80&w=800&auto=format&fit=crop" alt="Claude" loading="lazy">
+                    <div class="card-tag">文字與邏輯 · LLM</div>
+                </div>
+                <div class="card-content">
+                    <h2>Claude 3.5 Sonnet</h2>
+                    <p>由 Anthropic 開發的高智慧 AI 助理，擅長長文分析、邏輯推理與高質量程式碼編寫，具備全新的 Artifacts 實時預覽功能。</p>
+                    <div class="card-action">
+                        <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">
+                            <span>使用工具 (Sonnet)</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 工具 4: Runway Gen-2 / Gen-3 -->
+            <article>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=800&auto=format&fit=crop" alt="Runway" loading="lazy">
+                    <div class="card-tag">影片生成 · AI Video</div>
+                </div>
+                <div class="card-content">
+                    <h2>Runway (Gen-3 Alpha)</h2>
+                    <p>業界領先的 AI 影片生成與剪輯平台，支援「文生影片」與「圖生影片」，能迅速生成具有電影質感的動態影片片段。</p>
+                    <div class="card-action">
+                        <a href="https://runwayml.com" target="_blank" rel="noopener noreferrer">
+                            <span>使用工具 (Gen-3)</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 工具 5: GitHub Copilot -->
+            <article>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="GitHub Copilot" loading="lazy">
+                    <div class="card-tag">程式開發 · Coding</div>
+                </div>
+                <div class="card-content">
+                    <h2>GitHub Copilot</h2>
+                    <p>由 OpenAI 與 GitHub 合作推出的 AI 程式碼自動補全工具，無縫整合至 VS Code 等 IDE，顯著提升開發人員的寫碼效率。</p>
+                    <div class="card-action">
+                        <a href="https://github.com/features/copilot" target="_blank" rel="noopener noreferrer">
+                            <span>使用工具 (IDE Plug)</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 工具 6: Suno AI -->
+            <article>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" alt="Suno AI" loading="lazy">
+                    <div class="card-tag">音樂生成 · AI Audio</div>
+                </div>
+                <div class="card-content">
+                    <h2>Suno AI (v3.5)</h2>
+                    <p>突破性的 AI 音樂生成工具，只需輸入簡單的歌詞或風格描述，即可在數秒內生成具備人聲演唱與完整配樂的廣播級歌曲。</p>
+                    <div class="card-action">
+                        <a href="https://suno.com" target="_blank" rel="noopener noreferrer">
+                            <span>使用工具 (v3.5)</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <footer>
+            <p>© 2026 AI Directory & Tools Showcase. All rights reserved.</p>
+            <p>V1.0.0 Updated</p>
+            <div class="prompt-info">
+                <strong>系統備註：</strong> 本頁面改編自原 Travel Logs 格式，將旅遊景點卡片轉化為 AI 人工智能工具推薦指南，採用深色模式（Dark Mode）風格，並優化了響應式網格（Grid）佈局。
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
